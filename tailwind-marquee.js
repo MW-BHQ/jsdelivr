@@ -1,9 +1,10 @@
 document.onreadystatechange = () => {
   const track = document.querySelector('.track');
-    // total scroll distance is half the full scrollWidth
+    // measure full width, half of which is one loop
     const distance = track.scrollWidth / 2;
-    const speed = 80;               // pixels per second
-    const duration = distance / speed;
-    // set the CSS variable
-    track.style.setProperty('--marquee-duration', `${duration}s`);
+    // we want that to take exactly 15s
+    const duration = 15; // seconds
+    // set the CSS animation-duration explicitly
+    track.style.animationDuration = duration + 's';
+    // ensure the keyframes distance matches (translateX(-50%) already set)
 };
