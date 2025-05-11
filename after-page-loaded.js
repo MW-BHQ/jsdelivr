@@ -5,7 +5,7 @@ document.addEventListener("readystatechange", (event) => {
     initApp();
   }
 });
-
+ 
 function initApp(){
     //remove tally logo
   var tally_logo = document.getElementsByClassName('tally-powered');
