@@ -1,6 +1,6 @@
 document.addEventListener("readystatechange", (event) => {
   if (event.target.readyState === "interactive") {
-    initLoader();
+    //initLoader();
   } else if (event.target.readyState === "complete") {
     initApp();
   }
