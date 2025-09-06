@@ -61,18 +61,20 @@ function playVideo(btn, id, orientation) {
     card.classList.add('overflow-hidden');
 
     const iframe = document.createElement('iframe');
-    iframe.className = orientation === 'landscape'
-    ? 'absolute inset-0 w-full rounded-4xl'
-    : 'absolute inset-0 h-full rounded-4xl';
+    if (orientation === 'landscape') {
+        iframe.className = 'absolute inset-0 w-full rounded-4xl';
+    } else {
+        iframe.className = 'absolute inset-0 h-full rounded-4xl';
+    }
     iframe.title = 'All Hearts Matter - Official Video';
-    iframe.allow = 'autoplay; encrypted-media;';
+    iframe.allow = 'autoplay; encrypted-media; clipboard-write; picture-in-picture; web-share';
     iframe.setAttribute('allowfullscreen', 'true');
     iframe.setAttribute('playsinline', '1');
     iframe.referrerPolicy = 'strict-origin-when-cross-origin';
     iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&fs=0&iv_load_policy=3`;
- 
+
     card.appendChild(iframe);
-}
+  }
 
   // =========================
   //  Shuffle helper
