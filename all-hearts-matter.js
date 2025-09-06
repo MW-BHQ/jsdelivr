@@ -137,48 +137,68 @@ function animateCount(el, target, suffix = '') {
   }
 
 //scalling
-const container = document.getElementById('three-words');
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function initScrollCards(containerId = 'three-words') {
+    const container = document.getElementById(containerId);
+    if (!container) return; // exit if not found
 
-const SCALE_MIN = 0.8;
-const SCALE_MAX = 1.0;
-let currentScale = SCALE_MIN; // keep track to avoid shrinking
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function clamp(v, min, max) {
-    return Math.min(Math.max(v, min), max);
-  }
+    const SCALE_MIN = 0.8;    // 80% far from center
+    const SCALE_MAX = 1.0;    // 100% near/at center
+    const OPACITY_MIN = 0.6;  // fade-in from 0.6 → 1.0
 
-  function updateContainerScale() {
-    const vh = window.innerHeight;
-    const mid = vh / 2;
+    const lastScale = new WeakMap();
+    const lastOpacity = new WeakMap();
 
-    const rect = container.getBoundingClientRect();
-    const centerY = rect.top + rect.height / 2;
-    const dist = Math.abs(centerY - mid);
+    const cards = Array.from(container.querySelectorAll(':scope > div'));
 
-    const influence = Math.min(420, Math.max(280, vh * 0.45));
-    const t = clamp(dist / influence, 0, 1);
+    function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
 
-    // Normal scale formula
-    let scale = SCALE_MIN + (1 - t) * (SCALE_MAX - SCALE_MIN);
+    function updateCards() {
+      const vh = window.innerHeight;
+      const mid = vh / 2;
+      const influence = Math.min(420, Math.max(280, vh * 0.45));
 
-    // Prevent scale from decreasing once it has reached max
-    if (scale < currentScale) {
-      scale = currentScale;
+      for (const el of cards) {
+        const rect = el.getBoundingClientRect();
+        const centerY = rect.top + rect.height / 2;
+        const dist = Math.abs(centerY - mid);
+        const t = clamp(dist / influence, 0, 1);
+
+        let nextScale = SCALE_MIN + (1 - t) * (SCALE_MAX - SCALE_MIN);
+        let nextOpacity = OPACITY_MIN + (1 - t) * (1 - OPACITY_MIN);
+
+        if (lastScale.has(el)) nextScale = Math.max(nextScale, lastScale.get(el));
+        if (lastOpacity.has(el)) nextOpacity = Math.max(nextOpacity, lastOpacity.get(el));
+
+        lastScale.set(el, nextScale);
+        lastOpacity.set(el, nextOpacity);
+
+        if (!prefersReduced) {
+          el.style.transform = `scale(${nextScale})`;
+          el.style.opacity = nextOpacity.toFixed(3);
+        }
+      }
     }
-    currentScale = scale;
 
-    if (!prefersReduced) {
-      container.style.transform = `scale(${scale})`;
+    let rafId = null;
+    function onScrollResize() {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        updateCards();
+      });
     }
-  }
 
-  function onScrollResize() {
-    requestAnimationFrame(updateContainerScale);
-  }
+    const io = new IntersectionObserver(onScrollResize, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+    cards.forEach(el => io.observe(el));
 
-  window.addEventListener('scroll', onScrollResize, { passive: true });
-  window.addEventListener('resize', onScrollResize);
+    window.addEventListener('scroll', onScrollResize, { passive: true });
+    window.addEventListener('resize', onScrollResize);
+
+    // Initial run
+    updateCards();
+}
 //#scalling
 
 // Call functions after being ready
@@ -190,6 +210,6 @@ document.addEventListener("readystatechange", (event) => {
     setupIntersectionObserver();
     initCardFilter();
     shuffleCard();
-    updateContainerScale();
+    initScrollCards('three-words');
   }
 });
