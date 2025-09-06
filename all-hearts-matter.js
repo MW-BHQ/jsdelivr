@@ -44,45 +44,35 @@ function animateCount(el, target, suffix = '') {
 // =========================
 //  VIDEO: one player at a time
 // =========================
-  function playVideo(btn, id, orientation) {
-    var carousel = document.getElementById('video-carousel');
+function playVideo(btn, id, orientation) {
+    const carousel = document.getElementById('video-carousel');
     if (!carousel) return;
+    const card = btn.closest('.relative');
+    if (!card) return; 
 
-    var card = btn.closest('.relative');
-
-    // Reset others
-    var cards = carousel.children;
-    for (var i = 0; i < cards.length; i++) {
-      var c = cards[i];
-      if (!c.classList) continue;
-      var iframe = c.querySelector('iframe');
+    carousel.querySelectorAll(':scope > .relative').forEach((c) => {
+      const iframe = c.querySelector('iframe');
       if (iframe) iframe.remove();
-      var imgs = c.getElementsByTagName('img');
-      for (var j = 0; j < imgs.length; j++) imgs[j].classList.remove('invisible');
+      c.querySelectorAll('img').forEach(img => img.classList.remove('invisible'));
       c.classList.add('overflow-hidden');
-    }
+    });
 
-    // Hide images in clicked card
-    var hideImgs = card.getElementsByTagName('img');
-    for (var k = 0; k < hideImgs.length; k++) hideImgs[k].classList.add('invisible');
+    card.querySelectorAll('img').forEach(img => img.classList.add('invisible'));
     card.classList.add('overflow-hidden');
 
-    // Create the iframe
-    var iframe = document.createElement('iframe');
-    if (orientation === 'landscape') {
-        iframe.className = 'absolute inset-0 w-full rounded-4xl';
-    } else {
-        iframe.className = 'absolute inset-0 h-full rounded-4xl';
-    }
+    const iframe = document.createElement('iframe');
+    iframe.className = orientation === 'landscape'
+    ? 'absolute inset-0 w-full rounded-4xl'
+    : 'absolute inset-0 h-full rounded-4xl';
     iframe.title = 'All Hearts Matter - Official Video';
-    iframe.allow = 'autoplay; encrypted-media';
+    iframe.allow = 'autoplay; encrypted-media;';
     iframe.setAttribute('allowfullscreen', 'true');
     iframe.setAttribute('playsinline', '1');
     iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-    iframe.src = 'https://www.youtube-nocookie.com/embed/' + id +
-                 '?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&fs=0&iv_load_policy=3';
+    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&fs=0&iv_load_policy=3`;
+
     card.appendChild(iframe);
-  }
+}
 
   // =========================
   //  Shuffle helper
