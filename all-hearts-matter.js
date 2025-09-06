@@ -61,10 +61,13 @@ function playVideo(btn, id, orientation) {
     card.classList.add('overflow-hidden');
 
     const iframe = document.createElement('iframe');
+    iframe.className = 'absolute inset-0 rounded-4xl';
     if (orientation === 'landscape') {
-        iframe.className = 'absolute inset-0 w-full rounded-4xl';
+      iframe.classList.add('w-full');
+      iframe.classList.remove('h-full');
     } else {
-        iframe.className = 'absolute inset-0 h-full rounded-4xl';
+      iframe.classList.add('h-full');
+      iframe.classList.remove('w-full');
     }
     iframe.title = 'All Hearts Matter - Official Video';
     iframe.allow = 'autoplay; encrypted-media; clipboard-write; picture-in-picture; web-share';
