@@ -139,8 +139,13 @@ let currentScale = SCALE_MIN; // keep track to avoid shrinking
 //#scalling
 
 // Call it once your DOM is ready
-document.addEventListener("DOMContentLoaded", function () {
+
+document.addEventListener("readystatechange", (event) => {
+  if (event.target.readyState === "interactive") {
+    //initLoader();
+  } else if (event.target.readyState === "complete") {
     initCardFilter();
     shuffleCard();
     updateContainerScale();
+  }
 });
