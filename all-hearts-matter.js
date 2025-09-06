@@ -70,7 +70,7 @@ function playVideo(btn, id, orientation) {
     iframe.setAttribute('playsinline', '1');
     iframe.referrerPolicy = 'strict-origin-when-cross-origin';
     iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&fs=0&iv_load_policy=3`;
-
+ 
     card.appendChild(iframe);
 }
 
