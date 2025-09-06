@@ -1,4 +1,6 @@
-//animate counting
+// =========================
+//  Animation Counter
+// =========================
 function animateCount(el, target, suffix = '') {
     let start = 0;
     const duration = 1500; // in ms
@@ -39,134 +41,152 @@ function animateCount(el, target, suffix = '') {
     counters.forEach(el => observer.observe(el));
   }
 
-// click to play youtube
+// =========================
+//  VIDEO: one player at a time
+// =========================
   function playVideo(btn, id) {
-    const carousel = document.getElementById('video-carousel');
-    const card = btn.closest('.relative'); 
+    var carousel = document.getElementById('video-carousel');
+    if (!carousel) return;
 
-    // 1) Reset all other cards back to thumbnails (remove iframe, show images)
-    carousel.querySelectorAll(':scope > .relative').forEach((c) => {
-      const iframe = c.querySelector('iframe');
+    var card = btn.closest('.relative');
+
+    // Reset others
+    var cards = carousel.children;
+    for (var i = 0; i < cards.length; i++) {
+      var c = cards[i];
+      if (!c.classList) continue;
+      var iframe = c.querySelector('iframe');
       if (iframe) iframe.remove();
-      // Show both images again
-      c.querySelectorAll('img').forEach(img => img.classList.remove('invisible'));
-      // Make sure the card clips any overflow
-      c.classList.add('overflow-hidden'); // safe even if already there
-    });
+      var imgs = c.getElementsByTagName('img');
+      for (var j = 0; j < imgs.length; j++) imgs[j].classList.remove('invisible');
+      c.classList.add('overflow-hidden');
+    }
 
-    // 2) Hide the two images in the clicked card but keep their space
-    //    (use 'invisible' so layout/aspect stays the same and the iframe fits)
-    card.querySelectorAll('img').forEach(img => img.classList.add('invisible'));
-    card.classList.add('overflow-hidden'); // clip iframe edges to rounded corners
+    // Hide images in clicked card
+    var hideImgs = card.getElementsByTagName('img');
+    for (var k = 0; k < hideImgs.length; k++) hideImgs[k].classList.add('invisible');
+    card.classList.add('overflow-hidden');
 
-    // 3) Create the iframe and overlay it inside the same card
-    const iframe = document.createElement('iframe');
+    // Create the iframe
+    var iframe = document.createElement('iframe');
     iframe.className = 'absolute inset-0 w-full h-full rounded-2xl';
     iframe.title = 'YouTube video player';
     iframe.allow = 'autoplay; encrypted-media; clipboard-write; picture-in-picture; web-share';
     iframe.setAttribute('allowfullscreen', 'true');
     iframe.setAttribute('playsinline', '1');
     iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&fs=0&iv_load_policy=3`;
-
+    iframe.src = 'https://www.youtube-nocookie.com/embed/' + id +
+                 '?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&fs=0&iv_load_policy=3';
     card.appendChild(iframe);
   }
 
-//shuffle cards
-  function shuffleCard(){
-    const container = document.querySelector('#video-carousel');
-    const children = Array.from(container.children);
-    children.sort(() => Math.random() - 0.5);
-    children.forEach(child => container.appendChild(child));
+  // =========================
+  //  Shuffle helper
+  // =========================
+  function shuffleCard() {
+    var container = document.getElementById('video-carousel');
+    if (!container) return;
+    var children = Array.prototype.slice.call(container.children);
+    children.sort(function () { return Math.random() - 0.5; });
+    for (var i = 0; i < children.length; i++) container.appendChild(children[i]);
   }
 
-//cards filter 
+  // =========================
+  //  Filter bar
+  // =========================
   function initCardFilter() {
-    const filterBar = document.getElementById('card-filters');
-    const buttons = Array.from(filterBar.querySelectorAll('button[data-filter]'));
-    const grid = document.getElementById('card-grid');
-    const cards = Array.from(grid.children);
+    var filterBar = document.getElementById('card-filters');
+    var grid = document.getElementById('card-grid');
+    if (!filterBar || !grid) return;
+
+    var buttons = Array.prototype.slice.call(filterBar.querySelectorAll('button[data-filter]'));
+    var cards = Array.prototype.slice.call(grid.children);
 
     function setActive(btn) {
-      buttons.forEach(b => {
-        const isActive = b === btn;
-        b.classList.toggle('btn-primary', isActive && b.dataset.filter === 'all'); // keep All solid when active
+      for (var i = 0; i < buttons.length; i++) {
+        var b = buttons[i];
+        var isActive = b === btn;
+        b.classList.toggle('btn-primary', isActive && b.dataset.filter === 'all');
         b.classList.toggle('btn-outline', !(isActive && b.dataset.filter === 'all'));
         b.setAttribute('aria-pressed', String(isActive));
         if (b.dataset.filter !== 'all') {
           b.classList.toggle('btn-primary', isActive);
         }
-      });
+      }
     }
 
     function matches(card, filter) {
       if (filter === 'all') return true;
-      const tags = (card.getAttribute('data-tags') || '')
-        .toLowerCase()
-        .split(/[\s,]+/)
-        .filter(Boolean);
-      return tags.includes(filter.toLowerCase());
+      var tagStr = (card.getAttribute('data-tags') || '').toLowerCase();
+      var tags = tagStr.split(/[\s,]+/).filter(Boolean);
+      return tags.indexOf(filter.toLowerCase()) !== -1;
     }
 
     function applyFilter(filter) {
-      cards.forEach(card => {
-        const show = matches(card, filter);
+      for (var i = 0; i < cards.length; i++) {
+        var card = cards[i];
+        var show = matches(card, filter);
         if (show) {
           card.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none', 'hidden');
-          void card.offsetWidth; // force reflow
+          void card.offsetWidth; // reflow
           card.classList.add('opacity-100', 'translate-y-0');
         } else {
           card.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
-          setTimeout(() => card.classList.add('hidden'), 150);
+          (function (el) {
+            setTimeout(function () { el.classList.add('hidden'); }, 150);
+          })(card);
           card.classList.remove('opacity-100', 'translate-y-0');
         }
-      });
+      }
     }
 
-    filterBar.addEventListener('click', (e) => {
-      const btn = e.target.closest('button[data-filter]');
+    filterBar.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('button[data-filter]');
       if (!btn) return;
-      const filter = btn.dataset.filter;
+      var filter = btn.dataset.filter;
       setActive(btn);
-      cards.forEach(c => c.classList.remove('hidden'));
+      for (var i = 0; i < cards.length; i++) cards[i].classList.remove('hidden');
       applyFilter(filter);
     });
 
-    // initial state (All)
+    // initial
     applyFilter('all');
   }
 
-//scalling
-function initScrollCards(containerId = 'three-words') {
-    const container = document.getElementById(containerId);
-    if (!container) return; // exit if not found
+  // =========================
+  //  Scroll scale + fade (per card, no shrink once maxed)
+  // =========================
+  function initScrollCards(containerId) {
+    var container = document.getElementById(containerId || 'three-words');
+    if (!container) return;
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var prefersReduced = false;
+    try { prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 
-    const SCALE_MIN = 0.8;    // 80% far from center
-    const SCALE_MAX = 1.0;    // 100% near/at center
-    const OPACITY_MIN = 0.6;  // fade-in from 0.6 → 1.0
+    var SCALE_MIN = 0.8;
+    var SCALE_MAX = 1.0;
+    var OPACITY_MIN = 0.6;
 
-    const lastScale = new WeakMap();
-    const lastOpacity = new WeakMap();
-
-    const cards = Array.from(container.querySelectorAll(':scope > div'));
+    var cards = Array.prototype.slice.call(container.children);
+    var lastScale = new WeakMap();
+    var lastOpacity = new WeakMap();
 
     function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
 
     function updateCards() {
-      const vh = window.innerHeight;
-      const mid = vh / 2;
-      const influence = Math.min(420, Math.max(280, vh * 0.45));
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var mid = vh / 2;
+      var influence = Math.min(420, Math.max(280, vh * 0.45));
 
-      for (const el of cards) {
-        const rect = el.getBoundingClientRect();
-        const centerY = rect.top + rect.height / 2;
-        const dist = Math.abs(centerY - mid);
-        const t = clamp(dist / influence, 0, 1);
+      for (var i = 0; i < cards.length; i++) {
+        var el = cards[i];
+        var rect = el.getBoundingClientRect();
+        var centerY = rect.top + rect.height / 2;
+        var dist = Math.abs(centerY - mid);
+        var t = clamp(dist / influence, 0, 1);
 
-        let nextScale = SCALE_MIN + (1 - t) * (SCALE_MAX - SCALE_MIN);
-        let nextOpacity = OPACITY_MIN + (1 - t) * (1 - OPACITY_MIN);
+        var nextScale = SCALE_MIN + (1 - t) * (SCALE_MAX - SCALE_MIN);
+        var nextOpacity = OPACITY_MIN + (1 - t) * (1 - OPACITY_MIN);
 
         if (lastScale.has(el)) nextScale = Math.max(nextScale, lastScale.get(el));
         if (lastOpacity.has(el)) nextOpacity = Math.max(nextOpacity, lastOpacity.get(el));
@@ -175,41 +195,46 @@ function initScrollCards(containerId = 'three-words') {
         lastOpacity.set(el, nextOpacity);
 
         if (!prefersReduced) {
-          el.style.transform = `scale(${nextScale})`;
-          el.style.opacity = nextOpacity.toFixed(3);
+          el.style.transform = 'scale(' + nextScale + ')';
+          el.style.opacity = String(nextOpacity);
         }
       }
     }
 
-    let rafId = null;
+    var rafId = null;
     function onScrollResize() {
       if (rafId !== null) return;
-      rafId = requestAnimationFrame(() => {
+      rafId = requestAnimationFrame(function () {
         rafId = null;
         updateCards();
       });
     }
 
-    const io = new IntersectionObserver(onScrollResize, { threshold: [0, 0.25, 0.5, 0.75, 1] });
-    cards.forEach(el => io.observe(el));
+    // Observe visibility if available
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(onScrollResize, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+      for (var i = 0; i < cards.length; i++) io.observe(cards[i]);
+    }
 
     window.addEventListener('scroll', onScrollResize, { passive: true });
     window.addEventListener('resize', onScrollResize);
 
-    // Initial run
-    updateCards();
-}
-//#scalling
+    updateCards(); // initial
+  }
 
-// Call functions after being ready
-
-document.addEventListener("readystatechange", (event) => {
-  if (event.target.readyState === "interactive") {
-    //initLoader();
-  } else if (event.target.readyState === "complete") {
+  // =========================
+  //  Unified init (works in head or body)
+  // =========================
+  function initAll() {
     setupIntersectionObserver();
     initCardFilter();
     shuffleCard();
-    initScrollCards('three-words');
+    initScrollCards('three-words'); // per-card scale + fade
   }
-});
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    // Script ran after DOM is already parsed
+    initAll();
+  }
