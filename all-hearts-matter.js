@@ -45,39 +45,47 @@ function animateCount(el, target, suffix = '') {
 //  VIDEO: one player at a time
 // =========================
 function playVideo(btn, id, orientation) {
-    const carousel = document.getElementById('video-carousel');
-    if (!carousel) return;
-    const card = btn.closest('.relative');
-    if (!card) return; 
+  const carousel = document.getElementById('video-carousel');
+  if (!carousel) return;
+  const card = btn.closest('.relative');
+  if (!card) return;
 
-    carousel.querySelectorAll(':scope > .relative').forEach((c) => {
-      const iframe = c.querySelector('iframe');
-      if (iframe) iframe.remove();
-      c.querySelectorAll('img').forEach(img => img.classList.remove('invisible'));
-      c.classList.add('overflow-hidden');
-    });
-
-    card.querySelectorAll('img').forEach(img => img.classList.add('invisible'));
-    card.classList.add('overflow-hidden');
-
-    const iframe = document.createElement('iframe');
-    iframe.className = 'absolute inset-0 rounded-4xl';
-    if (orientation === 'landscape') {
-      iframe.classList.add('w-full');
-      iframe.classList.remove('h-full');
-    } else {
-      iframe.classList.add('h-full');
-      iframe.classList.remove('w-full');
-    }
-    iframe.title = 'All Hearts Matter - Official Video';
-    iframe.allow = 'autoplay; encrypted-media; clipboard-write; picture-in-picture; web-share';
-    iframe.setAttribute('allowfullscreen', 'true');
-    iframe.setAttribute('playsinline', '1');
-    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&fs=0&iv_load_policy=3`;
-
-    card.appendChild(iframe);
+  // Reset others (avoid :scope for compatibility)
+  const items = carousel.children; // direct .relative children
+  for (let i = 0; i < items.length; i++) {
+    const c = items[i];
+    const iframe = c.querySelector('iframe');
+    if (iframe) iframe.remove();
+    c.querySelectorAll('img').forEach(img => img.classList.remove('invisible'));
+    c.classList.add('overflow-hidden');
   }
+
+  // Hide images in clicked card
+  card.querySelectorAll('img').forEach(img => img.classList.add('invisible'));
+  card.classList.add('overflow-hidden');
+
+  // Create iframe
+  const iframe = document.createElement('iframe');
+  iframe.title = 'All Hearts Matter - Official Video';
+  iframe.allow = 'autoplay; encrypted-media; clipboard-write; picture-in-picture; web-share';
+  iframe.setAttribute('allowfullscreen', 'true');
+  iframe.setAttribute('playsinline', '1');
+  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+  iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&fs=0&iv_load_policy=3`;
+
+  // Base positioning
+  iframe.className = 'absolute rounded-4xl';
+
+  if (orientation === 'landscape') {
+    // Fill width & height of card
+    iframe.classList.add('inset-0', 'w-full');
+  } else {
+    // Do NOT use inset-0 (it forces full width). Fill height, center horizontally.
+    iframe.classList.add('top-0', 'bottom-0', 'left-1/2', '-translate-x-1/2', 'h-full', 'w-auto', 'max-w-full');
+  }
+
+  card.appendChild(iframe);
+}
 
   // =========================
   //  Shuffle helper
