@@ -1,4 +1,45 @@
-// Ensure only one player at a time and keep iframe constrained to the card
+//animate counting
+function animateCount(el, target, suffix = '') {
+    let start = 0;
+    const duration = 1500; // in ms
+    const startTime = performance.now();
+
+    function update(timestamp) {
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const current = Math.floor(progress * target);
+      el.textContent = `${current.toLocaleString()}${suffix}`;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = `${target.toLocaleString()}${suffix}`; 
+      }
+    }
+
+    el.textContent = `0${suffix}`;
+    requestAnimationFrame(update);
+  }
+
+  function setupIntersectionObserver() {
+    const counters = document.querySelectorAll('.count');
+    const seen = new Set();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !seen.has(entry.target)) {
+          const target = parseInt(entry.target.getAttribute('data-target'), 10);
+          const suffix = entry.target.getAttribute('data-suffix') || '';
+          animateCount(entry.target, target, suffix);
+          seen.add(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(el => observer.observe(el));
+  }
+
+// click to play youtube
   function playVideo(btn, id) {
     const carousel = document.getElementById('video-carousel');
     const card = btn.closest('.relative'); 
@@ -31,6 +72,7 @@
     card.appendChild(iframe);
   }
 
+//shuffle cards
   function shuffleCard(){
     const container = document.querySelector('#video-carousel');
     const children = Array.from(container.children);
@@ -38,6 +80,7 @@
     children.forEach(child => container.appendChild(child));
   }
 
+//cards filter 
   function initCardFilter() {
     const filterBar = document.getElementById('card-filters');
     const buttons = Array.from(filterBar.querySelectorAll('button[data-filter]'));
@@ -138,12 +181,13 @@ let currentScale = SCALE_MIN; // keep track to avoid shrinking
   window.addEventListener('resize', onScrollResize);
 //#scalling
 
-// Call it once your DOM is ready
+// Call functions after being ready
 
 document.addEventListener("readystatechange", (event) => {
   if (event.target.readyState === "interactive") {
     //initLoader();
   } else if (event.target.readyState === "complete") {
+    setupIntersectionObserver();
     initCardFilter();
     shuffleCard();
     updateContainerScale();
