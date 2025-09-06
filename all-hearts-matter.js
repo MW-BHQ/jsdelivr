@@ -44,7 +44,7 @@ function animateCount(el, target, suffix = '') {
 // =========================
 //  VIDEO: one player at a time
 // =========================
-  function playVideo(btn, id) {
+  function playVideo(btn, id, orientation) {
     var carousel = document.getElementById('video-carousel');
     if (!carousel) return;
 
@@ -69,9 +69,13 @@ function animateCount(el, target, suffix = '') {
 
     // Create the iframe
     var iframe = document.createElement('iframe');
-    iframe.className = 'absolute inset-0 w-full h-full rounded-2xl';
-    iframe.title = 'YouTube video player';
-    iframe.allow = 'autoplay; encrypted-media; clipboard-write; picture-in-picture; web-share';
+    if (orientation === 'landscape') {
+        iframe.className = 'absolute inset-0 w-full rounded-4xl';
+    } else {
+        iframe.className = 'absolute inset-0 h-full rounded-4xl';
+    }
+    iframe.title = 'All Hearts Matter - Official Video';
+    iframe.allow = 'autoplay; encrypted-media';
     iframe.setAttribute('allowfullscreen', 'true');
     iframe.setAttribute('playsinline', '1');
     iframe.referrerPolicy = 'strict-origin-when-cross-origin';
@@ -163,9 +167,9 @@ function animateCount(el, target, suffix = '') {
     var prefersReduced = false;
     try { prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 
-    var SCALE_MIN = 0.8;
+    var SCALE_MIN = 0.6;
     var SCALE_MAX = 1.0;
-    var OPACITY_MIN = 0.6;
+    var OPACITY_MIN = 0.5;
 
     var cards = Array.prototype.slice.call(container.children);
     var lastScale = new WeakMap();
