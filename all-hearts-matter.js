@@ -93,8 +93,54 @@
     applyFilter('all');
   }
 
-  // Call it once your DOM is ready
+//scalling
+const container = document.getElementById('three-words');
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const SCALE_MIN = 0.8;
+const SCALE_MAX = 1.0;
+let currentScale = SCALE_MIN; // keep track to avoid shrinking
+
+  function clamp(v, min, max) {
+    return Math.min(Math.max(v, min), max);
+  }
+
+  function updateContainerScale() {
+    const vh = window.innerHeight;
+    const mid = vh / 2;
+
+    const rect = container.getBoundingClientRect();
+    const centerY = rect.top + rect.height / 2;
+    const dist = Math.abs(centerY - mid);
+
+    const influence = Math.min(420, Math.max(280, vh * 0.45));
+    const t = clamp(dist / influence, 0, 1);
+
+    // Normal scale formula
+    let scale = SCALE_MIN + (1 - t) * (SCALE_MAX - SCALE_MIN);
+
+    // Prevent scale from decreasing once it has reached max
+    if (scale < currentScale) {
+      scale = currentScale;
+    }
+    currentScale = scale;
+
+    if (!prefersReduced) {
+      container.style.transform = `scale(${scale})`;
+    }
+  }
+
+  function onScrollResize() {
+    requestAnimationFrame(updateContainerScale);
+  }
+
+  window.addEventListener('scroll', onScrollResize, { passive: true });
+  window.addEventListener('resize', onScrollResize);
+//#scalling
+
+// Call it once your DOM is ready
 document.addEventListener("DOMContentLoaded", function () {
     initCardFilter();
     shuffleCard();
+    updateContainerScale();
 });
