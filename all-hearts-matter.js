@@ -103,16 +103,15 @@ function playVideo(btn, id) {
     var cards = Array.prototype.slice.call(grid.children);
 
     function setActive(btn) {
-      for (var i = 0; i < buttons.length; i++) {
-        var b = buttons[i];
-        var isActive = b === btn;
-        b.classList.toggle('btn-primary', isActive && b.dataset.filter === 'all');
-        b.classList.toggle('btn-outline', !(isActive && b.dataset.filter === 'all'));
+      buttons.forEach(b => {
+        const isActive = b === btn;
+        b.classList.toggle('bg-[#e7edfe]', isActive && b.dataset.filter === 'all'); // keep All solid when active
+        b.classList.toggle('bg-none', !(isActive && b.dataset.filter === 'all'));
         b.setAttribute('aria-pressed', String(isActive));
         if (b.dataset.filter !== 'all') {
-          b.classList.toggle('btn-primary', isActive);
+          b.classList.toggle('bg-[#e7edfe]', isActive);
         }
-      }
+      });
     }
 
     function matches(card, filter) {
