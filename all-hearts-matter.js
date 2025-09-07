@@ -80,9 +80,9 @@ function playVideo(btn, id) {
   card.appendChild(iframe);
 }
 
-  // =========================
-  //  Shuffle helper
-  // =========================
+// =========================
+//  Shuffle Cards
+// =========================
   function shuffleCard() {
     var container = document.getElementById('video-carousel');
     if (!container) return;
@@ -91,9 +91,9 @@ function playVideo(btn, id) {
     for (var i = 0; i < children.length; i++) container.appendChild(children[i]);
   }
 
-  // =========================
-  //  Filter bar
-  // =========================
+// =========================
+//  Filter Doctor Cards
+// =========================
   function initCardFilter() {
     var filterBar = document.getElementById('card-filters');
     var grid = document.getElementById('card-grid');
@@ -153,9 +153,97 @@ function playVideo(btn, id) {
     applyFilter('all');
   }
 
-  // =========================
-  //  Scroll scale + fade (per card, no shrink once maxed)
-  // =========================
+// =========================
+//  Doctor Cards Renderer
+// =========================
+function doctorCard(
+  name,
+  department,
+  specialty,   // single string
+  appointment, // link or phone number
+  profileUrl,
+  imageUrl,
+  tag,
+  mount        // optional container selector or element
+) {
+  const isPhone = /^\s*(tel:)?\+?[\d\s\-()]{6,}\s*$/.test(String(appointment));
+  const apptHref = isPhone
+    ? (String(appointment).trim().toLowerCase().startsWith("tel:")
+        ? String(appointment).trim()
+        : "tel:" + String(appointment).replace(/[^\d+]/g, ""))
+    : String(appointment || "#");
+
+  const html = `
+<div data-tags="${tag}"
+  class="tw-flex tw-flex-col tw-justify-between tw-w-full tw-h-full !tw-bg-white tw-shadow-main-blue tw-rounded-lg tw-overflow-hidden hover:!no-underline tw-relative">
+  <a rel="noopener noreferrer" href="${profileUrl}"
+     class="tw-px-4 tw-py-6 tw-flex md:tw-flex-col md:tw-space-y-6 md:tw-space-x-0 tw-space-x-6 tw-flex-row md:tw-items-center tw-relative">
+    <div class="tw-p-1.5 tw-shadow-main-blue tw-bg-white tw-rounded-full tw-h-min tw-w-min tw-flex-none">
+      <div class="tw-relative sm:tw-size-32 tw-size-[28vw] tw-rounded-full tw-overflow-hidden">
+        <div class="tw-absolute tw-top-0 tw-left-0 tw-w-full tw-h-full tw-overflow-hidden">
+          <img alt="Doctor Image" loading="lazy" decoding="async" data-nimg="fill"
+               class="tw-object-cover !tw-top-0 !tw-left-0 tw-duration-300 tw-delay-[50ms] tw-opacity-100 tw-object-top"
+               style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent"
+               src="${imageUrl}">
+          <span class="MuiSkeleton-root MuiSkeleton-rounded MuiSkeleton-wave !tw-absolute !tw-top-0 !tw-left-0 !tw-duration-500 tw-opacity-0 mui-1mrmhwg"
+                style="width:100%;height:100%"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tw-flex tw-flex-col md:tw-items-center tw-items-start sm:tw-space-y-2 tw-space-y-3 tw-w-full">
+      <h3 class="!text-base !tw-text-primary !tw-font-bold md:tw-text-center !text-[#363636] !no-underline !bg-none !mb-0 !leading-none">
+        ${name}
+      </h3>
+      <h4 class="!tw-text-sm md:tw-text-center max-sm:tw-line-clamp-2">
+        ${department}
+      </h4>
+      <span class="p-1 px-4 text-sm font-semibold rounded-full !bg-[#e7edff] !text-[#0147a3]"
+            style="font-family:var(--font-satoshi), var(--font-aktiv);">
+        ${specialty}
+      </span>
+    </div>
+  </a>
+
+  <div class="tw-grid tw-grid-cols-2">
+    <a rel="noopener noreferrer" href="${apptHref}">
+      <div class="tw-flex tw-items-center tw-justify-center tw-space-x-2 tw-w-full sm:tw-py-4 tw-py-3 tw-group tw-bg-bgh-gray-primary/5 hover:tw-bg-bgh-blue-alpha tw-duration-200 tw-cursor-pointer">
+        <i class="far fa-calendar-range tw-text-bgh-gray-dark group-hover:tw-text-primary tw-duration-200 max-sm:tw-text-sm" aria-hidden="true"></i>
+        <div class="tw-text-bgh-gray-dark group-hover:tw-text-primary tw-duration-200 text-xs no-underline tw-font-bold"
+             style="font-family:var(--font-satoshi), var(--font-aktiv);">นัดหมาย</div>
+      </div>
+    </a>
+    <a rel="noopener noreferrer" href="${profileUrl}" class="border-l border-[#e7edff]">
+      <div class="tw-flex tw-items-center tw-justify-center tw-space-x-2 tw-w-full sm:tw-py-4 tw-py-3 tw-group tw-bg-bgh-gray-primary/5 hover:tw-bg-bgh-blue-alpha tw-duration-200 tw-cursor-pointer">
+        <i class="far fa-info-circle tw-text-bgh-gray-dark group-hover:tw-text-primary tw-duration-200 max-sm:tw-text-sm" aria-hidden="true"></i>
+        <div class="tw-text-bgh-gray-dark group-hover:tw-text-primary tw-duration-200 text-xs no-underline tw-font-bold"
+             style="font-family:var(--font-satoshi), var(--font-aktiv);">รายละเอียด</div>
+      </div>
+    </a>
+  </div>
+</div>`.trim();
+
+  const tpl = document.createElement("template");
+  tpl.innerHTML = html;
+  const card = tpl.content.firstElementChild;
+
+  let mountEl = null;
+  if (mount) {
+    mountEl = typeof mount === "string" ? document.querySelector(mount) : mount;
+  }
+  if (mountEl) {
+    mountEl.appendChild(card);
+  } else {
+    // fallback: insert before current script (single use)
+    const anchor = document.currentScript;
+    if (anchor && anchor.parentNode) anchor.insertAdjacentElement("beforebegin", card);
+  }
+  return card;
+}//#doctor cards
+
+// =========================
+//  Scroll scale + fade (per card, no shrink once maxed)
+// =========================
   function initScrollCards(containerId) {
     var container = document.getElementById(containerId || 'three-words');
     if (!container) return;
@@ -222,19 +310,55 @@ function playVideo(btn, id) {
     updateCards(); // initial
   }
 
-  // =========================
-  //  Unified init (works in head or body)
-  // =========================
-  function initAll() {
-    setupIntersectionObserver();
+function initDoctorCards(){
+doctorCard(
+    'นพ. เกรียงไกร เฮงรัศมี',
+    'อายุรศาสตร์',
+    'อายุรศาสตร์โรคหัวใจ',
+    'https://www.bangkokhospital.com/th/bangkok-heart/doctor/dr-kriengkrai-hengrussamee#appointment',
+    'https://www.bangkokhospital.com/th/bangkok-heart/doctor/dr-kriengkrai-hengrussamee',
+    'https://epms.bdms.co.th/media/images/photos/BHQ/KRIENGKRAI_website_img.jpeg',
+    'กรุงเทพฯ',
+    '#card-grid'
+);
+
+doctorCard(
+    'นพ. ชิเทพ งามเจริญ',
+    'อายุรศาสตร์',
+    'อายุรศาสตร์โรคหัวใจ',
+    'https://www.bangkokhospital.com/th/ratchaburi/doctor/chithep-ngamcharoen-m-d#appointment',
+    'https://www.bangkokhospital.com/th/ratchaburi/doctor/chithep-ngamcharoen-m-d',
+    'https://epms.bdms.co.th/media/images/photos/BMR/065900004_446651.jpg',
+    'ภาคกลาง',
+    '#card-grid'
+);
+
+doctorCard(
+    'นพ. ทินกร สำเร็จ',
+    'อายุรศาสตร์',
+    'อายุรศาสตร์โรคหัวใจ',
+    '034219600',
+    'https://www.bangkokhospital.com/th/sanamchan/doctor/dr-tinakorn-samrej',
+    'https://epms.bdms.co.th/media/images/photos/BSN/063900403_C0028671.jpg',
+    'ภาคกลาง',
+    '#card-grid'
+);
+
+}
+
+// =========================
+//  Unified init
+// =========================
+function initAll() {
+    setupIntersectionObserver(); //stat counter
+    initDoctorCards();
     initCardFilter();
     shuffleCard();
-    initScrollCards('three-words'); // per-card scale + fade
-  }
+    initScrollCards('three-words'); // scaler
+}
 
-  if (document.readyState === 'loading') {
+if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAll);
-  } else {
-    // Script ran after DOM is already parsed
+} else {
     initAll();
-  }
+}
