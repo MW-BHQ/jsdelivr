@@ -174,9 +174,9 @@ function doctorCard(
 
   const html = `
 <div data-tags="${tag}"
-  class="tw-flex tw-flex-col tw-justify-between tw-w-full tw-h-full !tw-bg-white tw-shadow-main-blue tw-rounded-lg tw-overflow-hidden hover:!no-underline tw-relative">
+  class="tw-flex tw-flex-col tw-justify-between tw-w-full tw-h-full !tw-bg-white tw-shadow-main-blue tw-rounded-lg tw-overflow-hidden tw-relative">
   <a rel="noopener noreferrer" href="${profileUrl}"
-     class="tw-px-4 tw-py-6 tw-flex md:tw-flex-col md:tw-space-y-6 md:tw-space-x-0 tw-space-x-6 tw-flex-row md:tw-items-center tw-relative">
+     class="tw-px-4 tw-py-6 tw-flex md:tw-flex-col md:tw-space-y-6 md:tw-space-x-0 tw-space-x-6 tw-flex-row md:tw-items-center tw-relative !no-underline !hover:no-underline">
     <div class="tw-p-1.5 tw-shadow-main-blue tw-bg-white tw-rounded-full tw-h-min tw-w-min tw-flex-none">
       <div class="tw-relative sm:tw-size-32 tw-size-[28vw] tw-rounded-full tw-overflow-hidden">
         <div class="tw-absolute tw-top-0 tw-left-0 tw-w-full tw-h-full tw-overflow-hidden">
@@ -313,8 +313,8 @@ function initDoctorCards(){
 
 doctorCard(
     'นพ. เกรียงไกร เฮงรัศมี',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.หัวใจกรุงเทพ',
     '027551371',
     'https://www.bangkokhospital.com/th/bangkok-heart/doctor/dr-kriengkrai-hengrussamee',
     'https://epms.bdms.co.th/media/images/photos/BHQ/KRIENGKRAI_website_img.jpeg',
@@ -324,8 +324,8 @@ doctorCard(
 
 doctorCard(
     'นพ. ชิเทพ งามเจริญ',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพเมืองราช',
     '032322274',
     'https://www.bangkokhospital.com/th/ratchaburi/doctor/chithep-ngamcharoen-m-d',
     'https://epms.bdms.co.th/media/images/photos/BMR/065900004_446651.jpg',
@@ -335,8 +335,8 @@ doctorCard(
 
 doctorCard(
     'นพ. ทินกร สำเร็จ',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพสนามจันทร์',
     '034219600',
     'https://www.bangkokhospital.com/th/sanamchan/doctor/dr-tinakorn-samrej',
     'https://epms.bdms.co.th/media/images/photos/BSN/063900403_C0028671.jpg',
@@ -346,8 +346,8 @@ doctorCard(
 
 doctorCard(
     'นพ. ปวินท์ ศิริแสงชัยกุล',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพหัวหิน',
     '032616800',
     'https://www.bangkokhospital.com/th/huahin/doctor/dr-pawin-sirisaengchaikul',
     'https://static.bangkokhospital.com/uploads/2020/04/male.svg',
@@ -357,8 +357,8 @@ doctorCard(
 
 doctorCard(
     'นพ. ปริญญา ชมแสง',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพพัทยา',
     '038259986',
     'https://bangkokpattayahospital.com/th/doctor/prinya-chomsang-m/',
     'https://epms.bdms.co.th/media/images/photos/BPH/0291007_%E0%B8%AD.%E0%B8%9B%E0%B8%A3%E0%B8%8D%E0%B8%8D%E0%B8%B2.jpg',
@@ -368,8 +368,8 @@ doctorCard(
 
 doctorCard(
     'พญ. ธิดาพร ตั้งกิตติเกษม',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพจันทบุรี',
     '039319888',
     'https://bangkokhospitalchanthaburi.com/doctor/304',
     'https://bangkokhospitalchanthaburi.com/assets/pic_doctor/%E0%B8%9E%E0%B8%8D.%E0%B8%98%E0%B8%B4%E0%B8%94%E0%B8%B2%E0%B8%9E%E0%B8%A3%20%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%81%E0%B8%B4%E0%B8%95%E0%B8%95%E0%B8%B4%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%A1_%E0%B8%AD%E0%B8%B2%E0%B8%A2%E0%B8%B8%E0%B8%A3%E0%B8%A8%E0%B8%B2%E0%B8%AA%E0%B8%95%E0%B8%A3%E0%B9%8C%E0%B9%82%E0%B8%A3%E0%B8%84%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88.jpg',
@@ -379,30 +379,30 @@ doctorCard(
 
 doctorCard(
     'นพ. นรารัตน์ จันทรบุตร',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพตราด',
     '039319888',
     'https://www.bangkokhospital.com/th/trat/doctor/nararat-jantaraboot-m-d',
-    'https://epms.bdms.co.th/media/images/photos/BTH/006900706_NARARAT_JANTARABOOT.jpg',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BTH-%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%95%E0%B8%99%E0%B9%8C.png',
     'ภาคตะวันออก',
     '#card-grid'
 );
 
 doctorCard(
     'นพ. ปรัชญ์ ฉั่วริยะกุล',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพเชียงใหม่',
     '052089888',
     'https://www.bangkokhospital.com/th/chiangmai/doctor/prach-chuariyakul-m-d',
-    'https://epms.bdms.co.th/media/images/photos/BCM/%E0%B8%99%E0%B8%9E.-%E0%B8%9B%E0%B8%A3%E0%B8%B1%E0%B8%8A%E0%B8%8D%E0%B9%8C-%E0%B8%89%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%A3%E0%B8%B4%E0%B8%A2%E0%B8%B0%E0%B8%81%E0%B8%B8%E0%B8%A5.jpg',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BCM-%E0%B8%9B%E0%B8%A3%E0%B8%B1%E0%B8%8A%E0%B8%8D%E0%B9%8C.png',
     'ภาคเหนือ',
     '#card-grid'
 );
 
 doctorCard(
     'นพ. ชาติทนง ยอดวุฒิ',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพเชียงราย',
     '052051800',
     'https://www.bangkokhospital.com/th/chiangrai/doctor/chattanong-yodwut-m-d',
     'https://epms.bdms.co.th/media/images/photos/BCR/055000260_2022-02-11_151637.jpg',
@@ -412,8 +412,8 @@ doctorCard(
 
 doctorCard(
     'พญ. วริศรา เพชรวิภูษิต',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพพิษณุโลก',
     '055051724',
     'https://www.bangkokhospital.com/th/phitsanulok/doctor/warisara-petvipusit-m-d',
     'https://epms.bdms.co.th/media/images/photos/BPL/%E0%B8%97%E0%B8%B5%E0%B8%A1%E0%B8%AB%E0%B8%A1%E0%B8%AD_Med_%E0%B8%9E%E0%B8%8D.%E0%B8%A7%E0%B8%A3%E0%B8%B4%E0%B8%A8%E0%B8%A3%E0%B8%B2_%E0%B9%80%E0%B8%9E%E0%B8%8A%E0%B8%A3%E0%B8%A7%E0%B8%B4%E0%B8%A0%E0%B8%B9%E0%B8%A9%E0%B8%B4%E0%B8%95.png',
@@ -423,8 +423,8 @@ doctorCard(
 
 doctorCard(
     'พญ. วชิราภา เจริญผล',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพปากช่อง',
     '044088960',
     'https://www.bangkokhospital.com/th/pakchong/doctor/wachirapa-charoenpol-m-d',
     'https://static.bangkokhospital.com/uploads/2025/07/IMG_1864-93-15.png',
@@ -434,8 +434,8 @@ doctorCard(
 
 doctorCard(
     'นพ. ไกรสร อนุตรพงษ์พันธ์',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพขอนแก่น',
     '043042888',
     'https://www.bangkokhospital.com/th/khonkaen/doctor/kraisorn-anutarapongpan-m-d',
     'https://epms.bdms.co.th/media/images/photos/BKN/akrai.jpg',
@@ -445,8 +445,8 @@ doctorCard(
 
 doctorCard(
     'นพ. พินิจ แก้วสุวรรณะ',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพราชสีมา',
     '044015999',
     'https://www.bangkokhospital.com/th/ratchasima/doctor/pinij-kaewsuwanna-m-d',
     'https://epms.bdms.co.th/media/images/photos/BKH/%E0%B8%99%E0%B8%9E.%E0%B8%9E%E0%B8%B4%E0%B8%99%E0%B8%B4%E0%B8%88.jpg',
@@ -456,8 +456,8 @@ doctorCard(
 
 doctorCard(
     'นพ. เกษม ตันติพานิชธีระกุล',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพอุดร',
     '042188999',
     'https://www.bangkokhospital.com/th/udon/doctor/dr-kasem-tantipanichteerakul',
     'https://epms.bdms.co.th/media/images/photos/BUD/170097_38972695.jpg',
@@ -467,8 +467,8 @@ doctorCard(
 
 doctorCard(
     'นพ. ณัฏฐ์ ชวณิชย์',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพสมุย',
     '077429500',
     'https://bangkokhospitalsamui.com/th/doctor/nat-chawanid/',
     'https://bangkokhospitalsamui.com/wp-content/uploads/2022/11/1IMG_7025-687x1024.jpg.webp',
@@ -478,8 +478,8 @@ doctorCard(
 
 doctorCard(
     'พญ. ธนวัน สิริวิวัฒน์ธน',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพสุราษฎร์',
     '077956789',
     'https://www.bangkokhospitalsurat.com/doctor/%E0%B8%9E%E0%B8%8D-%E0%B8%98%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99-%E0%B8%AA%E0%B8%B4%E0%B8%A3%E0%B8%B4%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%B1%E0%B8%92%E0%B8%99%E0%B9%8C%E0%B8%98%E0%B8%99/',
     'https://www.bangkokhospitalsurat.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2024/02/IMG_8018-scaled-e1755484091825-742x1024.jpg.webp',
@@ -489,8 +489,8 @@ doctorCard(
 
 doctorCard(
     'นพ. สิปป์ภวิชญ์ อิสริวาทีกร',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพสิริโรจน์',
     '076361888',
     'https://www.phuketinternationalhospital.com/doctors/sippawit-itsariwateekorn/',
     'https://www.phuketinternationalhospital.com/wp-content/uploads/2022/08/1.png',
@@ -500,8 +500,8 @@ doctorCard(
 
 doctorCard(
     'ผศ.นพ. ชูศักดิ์ คุปตานนท์',
-    'ศัลยศาสตร์',
     'ศัลยศาสตร์หัวใจหลอดเลือดและทรวงอก',
+    'รพ.กรุงเทพภูเก็ต',
     '076254425',
     'https://www.phukethospital.com/th/doctor/chusak-kuptarnond/',
     'https://www.phukethospital.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2018/10/chusak.jpg.webp',
@@ -511,8 +511,8 @@ doctorCard(
 
 doctorCard(
     'นพ. บุญสม จันศิริมงคล',
-    'อายุรศาสตร์',
     'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพหาดใหญ่',
     '074272800',
     'https://www.bangkokhospital.com/th/hatyai/doctor/dr-boonsom-junsirimongkol',
     'https://epms.bdms.co.th/media/images/photos/BHH/244546_730A1049.jpg',
