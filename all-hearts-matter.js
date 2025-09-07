@@ -74,13 +74,7 @@ function playVideo(btn, id, orientation) {
   iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&fs=0&iv_load_policy=3`;
 
   // Base positioning
-  iframe.className = 'absolute inset-0 h-full rounded-4xl';
-
-  if (orientation === 'landscape') {
-    iframe.classList.add('w-full', 'aspect-video');
-  } else {
-    iframe.classList.add('aspect-9/16');
-  }
+  iframe.className = 'absolute inset-0 !w-full !h-full rounded-4xl';
 
   card.appendChild(iframe);
 }
