@@ -74,14 +74,12 @@ function playVideo(btn, id, orientation) {
   iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&fs=0&iv_load_policy=3`;
  
   // Base positioning
-  iframe.className = 'absolute rounded-4xl';
+  iframe.className = 'absolute inset-0 w-full h-full rounded-4xl';
 
   if (orientation === 'landscape') {
-    // Fill width & height of card
     iframe.classList.add('inset-0', 'w-full');
   } else {
-    // Do NOT use inset-0 (it forces full width). Fill height, center horizontally.
-    iframe.classList.add('top-0', 'bottom-0', 'left-1/2', '-translate-x-1/2', 'h-full', 'w-auto', 'max-w-full');
+    iframe.classList.remove('w-full');
   }
 
   card.appendChild(iframe);
