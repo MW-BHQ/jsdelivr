@@ -44,7 +44,7 @@ function animateCount(el, target, suffix = '') {
 // =========================
 //  VIDEO: one player at a time
 // =========================
-function playVideo(btn, id, orientation) {
+function playVideo(btn, id) {
   const carousel = document.getElementById('video-carousel');
   if (!carousel) return;
   const card = btn.closest('.relative');
@@ -75,6 +75,7 @@ function playVideo(btn, id, orientation) {
 
   // Base positioning
   iframe.className = 'absolute inset-0 !w-full !h-full rounded-4xl';
+  iframe.style.borderRadius = '2rem';
 
   card.appendChild(iframe);
 }
