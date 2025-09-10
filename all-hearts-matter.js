@@ -44,8 +44,8 @@ function animateCount(el, target, suffix = '') {
 // =========================
 //  VIDEO: one player at a time
 // =========================
-function playVideo(btn, id) {
-  const carousel = document.getElementById('video-carousel');
+function playVideo(btn, id, parent_block) {
+  const carousel = document.getElementById('parent_block');
   if (!carousel) return;
   const card = btn.closest('.relative');
   if (!card) return;
@@ -328,7 +328,7 @@ doctorCard(
     'รพ.กรุงเทพเมืองราช',
     '032322274',
     'https://www.bangkokhospital.com/th/ratchaburi/doctor/chithep-ngamcharoen-m-d',
-    'https://epms.bdms.co.th/media/images/photos/BMR/065900004_446651.jpg',
+    'https://drive.google.com/file/d/1htk0HErdM-sC4b1YFZVIF8IqVbS-55jk/view?usp=drive_link',
     'ภาคกลาง',
     '#card-grid'
 );
