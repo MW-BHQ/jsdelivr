@@ -45,7 +45,7 @@ function animateCount(el, target, suffix = '') {
 //  VIDEO: one player at a time
 // =========================
 function playVideo(btn, id, parent_block) {
-  const carousel = document.getElementById('parent_block');
+  const carousel = document.getElementById(parent_block);
   if (!carousel) return;
   const card = btn.closest('.relative');
   if (!card) return;
