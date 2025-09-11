@@ -2,44 +2,43 @@
 //  Animation Counter
 // =========================
 function animateCount(el, target, suffix = '') {
-    let start = 0;
-    const duration = 1500; // in ms
-    const startTime = performance.now();
+  const duration = 1500; // ms
+  const startTime = performance.now();
 
-    function update(timestamp) {
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const current = Math.floor(progress * target);
-      el.textContent = `${current.toLocaleString()}${suffix}`;
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      } else {
-        el.textContent = `${target.toLocaleString()}${suffix}`; 
-      }
-    }
-
-    el.textContent = `0${suffix}`;
-    requestAnimationFrame(update);
+  function update(timestamp) {
+    const elapsed = timestamp - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const current = Math.floor(progress * target);
+    el.textContent = `${current.toLocaleString()}${suffix}`;
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = `${target.toLocaleString()}${suffix}`;
   }
 
-  function setupIntersectionObserver() {
-    const counters = document.querySelectorAll('.count');
-    const seen = new Set();
+  el.textContent = `0${suffix}`;
+  requestAnimationFrame(update);
+}
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !seen.has(entry.target)) {
-          const target = parseInt(entry.target.getAttribute('data-target'), 10);
-          const suffix = entry.target.getAttribute('data-suffix') || '';
-          animateCount(entry.target, target, suffix);
-          seen.add(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
+function setupIntersectionObserver() {
+  const counters = document.querySelectorAll('.count');
+  const seen = new Set();
 
-    counters.forEach(el => observer.observe(el));
-  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting || seen.has(entry.target)) return;
+
+      const raw = entry.target.getAttribute('data-target');
+      const target = Number(raw);
+      if (!Number.isFinite(target)) { observer.unobserve(entry.target); return; }
+
+      const suffix = entry.target.getAttribute('data-suffix') || '';
+      animateCount(entry.target, target, suffix);
+      seen.add(entry.target);
+      observer.unobserve(entry.target); // free it
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(el => observer.observe(el));
+}
 
 // =========================
 //  VIDEO: one player at a time
@@ -175,12 +174,12 @@ function doctorCard(
   const html = `
 <div data-tags="${tag}"
   class="tw-flex tw-flex-col tw-justify-between tw-w-full tw-h-full !tw-bg-white tw-shadow-main-blue tw-rounded-lg tw-overflow-hidden tw-relative">
-  <a rel="noopener noreferrer" href="${profileUrl}"
+  <a href="${profileUrl}"
      class="tw-px-4 tw-py-6 tw-flex md:tw-flex-col md:tw-space-y-6 md:tw-space-x-0 tw-space-x-6 tw-flex-row md:tw-items-center tw-relative !no-underline !hover:no-underline">
     <div class="tw-p-1.5 tw-shadow-main-blue tw-bg-white tw-rounded-full tw-h-min tw-w-min tw-flex-none">
       <div class="tw-relative sm:tw-size-32 tw-size-[28vw] tw-rounded-full tw-overflow-hidden">
         <div class="tw-absolute tw-top-0 tw-left-0 tw-w-full tw-h-full tw-overflow-hidden">
-          <img alt="Doctor Image" loading="lazy" decoding="async" data-nimg="fill"
+          <img alt="${name}" loading="lazy" decoding="async" data-nimg="fill"
                class="tw-object-cover !tw-top-0 !tw-left-0 tw-duration-300 tw-delay-[50ms] tw-opacity-100 tw-object-top"
                style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent"
                src="${imageUrl}">
@@ -205,14 +204,14 @@ function doctorCard(
   </a>
 
   <div class="tw-grid tw-grid-cols-2">
-    <a rel="noopener noreferrer" href="${apptHref}">
+    <a href="${apptHref}">
       <div class="tw-flex tw-items-center tw-justify-center tw-space-x-2 tw-w-full sm:tw-py-4 tw-py-3 tw-group tw-bg-bgh-gray-primary/5 hover:tw-bg-bgh-blue-alpha tw-duration-200 tw-cursor-pointer">
         <i class="far fa-calendar-range tw-text-bgh-gray-dark group-hover:tw-text-primary tw-duration-200 max-sm:tw-text-sm" aria-hidden="true"></i>
         <div class="tw-text-bgh-gray-dark group-hover:tw-text-primary tw-duration-200 text-xs no-underline tw-font-bold"
              style="font-family:var(--font-satoshi), var(--font-aktiv);">นัดหมาย</div>
       </div>
     </a>
-    <a rel="noopener noreferrer" href="${profileUrl}" class="border-l border-[#e7edff]">
+    <a href="${profileUrl}" class="border-l border-[#e7edff]">
       <div class="tw-flex tw-items-center tw-justify-center tw-space-x-2 tw-w-full sm:tw-py-4 tw-py-3 tw-group tw-bg-bgh-gray-primary/5 hover:tw-bg-bgh-blue-alpha tw-duration-200 tw-cursor-pointer">
         <i class="far fa-info-circle tw-text-bgh-gray-dark group-hover:tw-text-primary tw-duration-200 max-sm:tw-text-sm" aria-hidden="true"></i>
         <div class="tw-text-bgh-gray-dark group-hover:tw-text-primary tw-duration-200 text-xs no-underline tw-font-bold"
@@ -482,7 +481,7 @@ doctorCard(
     'รพ.กรุงเทพเชียงราย',
     '052051800',
     'https://www.bangkokhospital.com/th/chiangrai/doctor/chattanong-yodwut-m-d',
-    'https://epms.bdms.co.th/media/images/photos/BCR/055000260_2022-02-11_151637.jpg',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BHT-1.%E0%B8%99%E0%B8%9E.%E0%B8%8A%E0%B8%B2%E0%B8%95%E0%B8%B4%E0%B8%97%E0%B8%99%E0%B8%87-%E0%B8%A0%E0%B8%B2%E0%B8%A7%E0%B8%B0%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B8%95%E0%B8%B1%E0%B8%A7.jpg.jpg',
     'ภาคเหนือ',
     '#card-grid'
 );
