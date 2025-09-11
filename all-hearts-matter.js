@@ -323,23 +323,78 @@ doctorCard(
 );
 
 doctorCard(
-    'นพ. ชิเทพ งามเจริญ',
+    'พญ. ชาร์มิลา เสรี',
     'อายุรศาสตร์โรคหัวใจ',
-    'รพ.กรุงเทพเมืองราช',
-    '032322274',
-    'https://www.bangkokhospital.com/th/ratchaburi/doctor/chithep-ngamcharoen-m-d',
-    'https://drive.google.com/file/d/1htk0HErdM-sC4b1YFZVIF8IqVbS-55jk/view?usp=drive_link',
-    'ภาคกลาง',
+    'รพ.หัวใจกรุงเทพ',
+    '027551371',
+    'https://www.bangkokhospital.com/th/bangkok-heart/doctor/dr-sharmila-sehli',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BHT-1.-%E0%B8%9E%E0%B8%8D.%E0%B8%8A%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%A1%E0%B8%B4%E0%B8%A5%E0%B8%B2-%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88%E0%B9%80%E0%B8%95%E0%B9%89%E0%B8%99%E0%B8%9C%E0%B8%B4%E0%B8%94%E0%B8%88%E0%B8%B1%E0%B8%87%E0%B8%AB%E0%B8%A7%E0%B8%B0.jpg.jpg',
+    'กรุงเทพฯ',
     '#card-grid'
 );
 
+doctorCard(
+    'นพ. ชาติทนง ยอดวุฒิ',
+    'อายุรศาสตร์โรคหัวใจ',
+    'รพ.หัวใจกรุงเทพ',
+    '027551371',
+    'https://www.bangkokhospital.com/th/bangkok-heart/doctor/dr-chattanong-yodwut-3',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BHT-1.%E0%B8%99%E0%B8%9E.%E0%B8%8A%E0%B8%B2%E0%B8%95%E0%B8%B4%E0%B8%97%E0%B8%99%E0%B8%87-%E0%B8%A0%E0%B8%B2%E0%B8%A7%E0%B8%B0%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B8%95%E0%B8%B1%E0%B8%A7.jpg.jpg',
+    'กรุงเทพฯ',
+    '#card-grid'
+);
+
+doctorCard(
+    'นพ. วิชัย จิรโรจน์อังกูร',
+    'อายุรศาสตร์โรคหัวใจ',
+    'รพ.หัวใจกรุงเทพ',
+    '027551371',
+    'https://www.bangkokhospital.com/th/bangkok-heart/doctor/dr-wichai-jiraroj-ungkun',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BHT-1.%E0%B8%99%E0%B8%9E.%E0%B8%A7%E0%B8%B4%E0%B8%8A%E0%B8%B1%E0%B8%A2-%E0%B8%AB%E0%B8%A5%E0%B8%AD%E0%B8%94%E0%B9%80%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%94%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88%E0%B8%95%E0%B8%B5%E0%B8%9A.jpg',
+    'กรุงเทพฯ',
+    '#card-grid'
+);
+
+doctorCard(
+    'นพ. วิฑูรย์ ปิติเกื้อกูล',
+    'อายุรศาสตร์โรคหัวใจ',
+    'รพ.หัวใจกรุงเทพ',
+    '027551371',
+    'https://www.bangkokhospital.com/th/bangkok-heart/doctor/dr-vitoon-pitiguagool',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BHT-2.-%E0%B8%99%E0%B8%9E.%E0%B8%A7%E0%B8%B4%E0%B8%91%E0%B8%B9%E0%B8%A3%E0%B8%A2%E0%B9%8C-%E0%B8%AB%E0%B8%A5%E0%B8%AD%E0%B8%94%E0%B9%80%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%94%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88%E0%B8%95%E0%B8%B5%E0%B8%9A.jpg',
+    'กรุงเทพฯ',
+    '#card-grid'
+);
+
+doctorCard(
+    'นพ. อภิชัย คงพัฒนะโยธิน',
+    'อายุรศาสตร์โรคหัวใจ',
+    'รพ.หัวใจกรุงเทพ',
+    '027551371',
+    'https://www.bangkokhospital.com/th/bangkok-heart/doctor/dr-apichai-khongphatthanayothin',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BHT-2.-%E0%B8%99%E0%B8%9E.%E0%B8%AD%E0%B8%A0%E0%B8%B4%E0%B8%8A%E0%B8%B1%E0%B8%A2-%E0%B8%A0%E0%B8%B2%E0%B8%A7%E0%B8%B0%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88%E0%B8%9E%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B8%9C%E0%B8%B4%E0%B8%94%E0%B8%9B%E0%B8%81%E0%B8%95%E0%B8%B4.jpg.jpg',
+    'กรุงเทพฯ',
+    '#card-grid'
+);
+
+doctorCard(
+    'นพ. ชวัล ศรีศักดิ์วรากุล',
+    'อายุรศาสตร์โรคหัวใจ',
+    'รพ.หัวใจกรุงเทพ',
+    '027551371',
+    'https://www.bangkokhospital.com/th/bangkok-heart/doctor/dr-chaval-srisakvarakul',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BHT-2.%E0%B8%99%E0%B8%9E.%E0%B8%8A%E0%B8%A7%E0%B8%B1%E0%B8%A5-%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88%E0%B9%80%E0%B8%95%E0%B9%89%E0%B8%99%E0%B8%9C%E0%B8%B4%E0%B8%94%E0%B8%88%E0%B8%B1%E0%B8%87%E0%B8%AB%E0%B8%A7%E0%B8%B0.jpg.jpg',
+    'กรุงเทพฯ',
+    '#card-grid'
+);
+    
 doctorCard(
     'นพ. ทินกร สำเร็จ',
     'อายุรศาสตร์โรคหัวใจ',
     'รพ.กรุงเทพสนามจันทร์',
     '034219600',
     'https://www.bangkokhospital.com/th/sanamchan/doctor/dr-tinakorn-samrej',
-    'https://epms.bdms.co.th/media/images/photos/BSN/063900403_C0028671.jpg',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BSN-%E0%B8%99%E0%B8%9E.%E0%B8%97%E0%B8%B4%E0%B8%99%E0%B8%81%E0%B8%A3-%E0%B8%AA%E0%B8%B3%E0%B9%80%E0%B8%A3%E0%B9%87%E0%B8%88.jpg',
     'ภาคกลาง',
     '#card-grid'
 );
@@ -350,7 +405,18 @@ doctorCard(
     'รพ.กรุงเทพหัวหิน',
     '032616800',
     'https://www.bangkokhospital.com/th/huahin/doctor/dr-pawin-sirisaengchaikul',
-    'https://static.bangkokhospital.com/uploads/2020/04/male.svg',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BHN-%E0%B8%99%E0%B8%9E.-%E0%B8%9B%E0%B8%A7%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B9%8C-%E0%B8%A8%E0%B8%B4%E0%B8%A3%E0%B8%B4%E0%B9%81%E0%B8%AA%E0%B8%87%E0%B8%8A%E0%B8%B1%E0%B8%A2%E0%B8%81%E0%B8%B8%E0%B8%A5.jpg',
+    'ภาคตะวันตก',
+    '#card-grid'
+);
+
+doctorCard(
+    'นพ. ชิเทพ งามเจริญ',
+    'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพเมืองราช',
+    '032322274',
+    'https://www.bangkokhospital.com/th/ratchaburi/doctor/chithep-ngamcharoen-m-d',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BMR-%E0%B8%99%E0%B8%9E.%E0%B8%8A%E0%B8%B4%E0%B9%80%E0%B8%97%E0%B8%9E-%E0%B8%87%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%8D.jpg',
     'ภาคตะวันตก',
     '#card-grid'
 );
@@ -361,7 +427,7 @@ doctorCard(
     'รพ.กรุงเทพพัทยา',
     '038259986',
     'https://bangkokpattayahospital.com/th/doctor/prinya-chomsang-m/',
-    'https://epms.bdms.co.th/media/images/photos/BPH/0291007_%E0%B8%AD.%E0%B8%9B%E0%B8%A3%E0%B8%8D%E0%B8%8D%E0%B8%B2.jpg',
+    'https://static.bangkokhospital.com/uploads/2025/09/BPH-Dr.Prinya-chomsang.jpg',
     'ภาคตะวันออก',
     '#card-grid'
 );
@@ -372,7 +438,7 @@ doctorCard(
     'รพ.กรุงเทพจันทบุรี',
     '039319888',
     'https://bangkokhospitalchanthaburi.com/doctor/304',
-    'https://bangkokhospitalchanthaburi.com/assets/pic_doctor/%E0%B8%9E%E0%B8%8D.%E0%B8%98%E0%B8%B4%E0%B8%94%E0%B8%B2%E0%B8%9E%E0%B8%A3%20%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%81%E0%B8%B4%E0%B8%95%E0%B8%95%E0%B8%B4%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%A1_%E0%B8%AD%E0%B8%B2%E0%B8%A2%E0%B8%B8%E0%B8%A3%E0%B8%A8%E0%B8%B2%E0%B8%AA%E0%B8%95%E0%B8%A3%E0%B9%8C%E0%B9%82%E0%B8%A3%E0%B8%84%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88.jpg',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BCH-%E0%B8%9E%E0%B8%8D.%E0%B8%98%E0%B8%B4%E0%B8%94%E0%B8%B2%E0%B8%9E%E0%B8%A3-%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%81%E0%B8%B4%E0%B8%95%E0%B8%95%E0%B8%B4%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%A1.jpg',
     'ภาคตะวันออก',
     '#card-grid'
 );
@@ -383,18 +449,29 @@ doctorCard(
     'รพ.กรุงเทพตราด',
     '039319888',
     'https://www.bangkokhospital.com/th/trat/doctor/nararat-jantaraboot-m-d',
-    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BTH-%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%95%E0%B8%99%E0%B9%8C.png',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BTH-%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%95%E0%B8%99%E0%B9%8C.jpg',
     'ภาคตะวันออก',
     '#card-grid'
 );
 
+doctorCard(
+    'นพ. พงศกร บุรพัฒน์',
+    'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพระยอง',
+    '038921999',
+    'https://www.bangkokhospitalrayong.com/',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BRH-%E0%B8%9E%E0%B8%87%E0%B8%A8%E0%B8%81%E0%B8%A3-%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%9E%E0%B8%B1%E0%B8%92%E0%B8%99%E0%B9%8C-%E0%B8%AD%E0%B8%B2%E0%B8%A2%E0%B8%B8%E0%B8%A3%E0%B8%A8%E0%B8%B2%E0%B8%AA%E0%B8%95%E0%B9%8C%E0%B9%82%E0%B8%A3%E0%B8%84%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88.jpg.jpg',
+    'ภาคตะวันออก',
+    '#card-grid'
+);
+    
 doctorCard(
     'นพ. ปรัชญ์ ฉั่วริยะกุล',
     'อายุรศาสตร์โรคหัวใจ',
     'รพ.กรุงเทพเชียงใหม่',
     '052089888',
     'https://www.bangkokhospital.com/th/chiangmai/doctor/prach-chuariyakul-m-d',
-    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BCM-%E0%B8%9B%E0%B8%A3%E0%B8%B1%E0%B8%8A%E0%B8%8D%E0%B9%8C.png',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BCM-%E0%B8%99%E0%B8%9E.-%E0%B8%9B%E0%B8%A3%E0%B8%B1%E0%B8%8A%E0%B8%8D%E0%B9%8C-%E0%B8%89%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%A3%E0%B8%B4%E0%B8%A2%E0%B8%B0%E0%B8%81%E0%B8%B8%E0%B8%A5.jpg',
     'ภาคเหนือ',
     '#card-grid'
 );
@@ -416,18 +493,51 @@ doctorCard(
     'รพ.กรุงเทพพิษณุโลก',
     '055051724',
     'https://www.bangkokhospital.com/th/phitsanulok/doctor/warisara-petvipusit-m-d',
-    'https://epms.bdms.co.th/media/images/photos/BPL/%E0%B8%97%E0%B8%B5%E0%B8%A1%E0%B8%AB%E0%B8%A1%E0%B8%AD_Med_%E0%B8%9E%E0%B8%8D.%E0%B8%A7%E0%B8%A3%E0%B8%B4%E0%B8%A8%E0%B8%A3%E0%B8%B2_%E0%B9%80%E0%B8%9E%E0%B8%8A%E0%B8%A3%E0%B8%A7%E0%B8%B4%E0%B8%A0%E0%B8%B9%E0%B8%A9%E0%B8%B4%E0%B8%95.png',
-    'ภาคเหนือ',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BPL-%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%97%E0%B8%AB%E0%B8%A1%E0%B8%AD%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88-nw-01.jpg.jpg',
+    'ภาคกลาง',
     '#card-grid'
 );
 
+doctorCard(
+    'นพ. สิปวัฒน์ ขำปลอด',
+    'หัตถการปฏิบัติรักษาโรคหัวใจและหลอดเลือด',
+    'รพ.กรุงเทพพิษณุโลก',
+    '055051724',
+    'https://www.bangkokhospital.com/th/phitsanulok/doctor/sipawath-khamplod-m-d',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BPL-%E0%B8%99%E0%B8%9E-%E0%B8%A5%E0%B8%B4%E0%B8%9B%E0%B8%A7%E0%B8%B1%E0%B8%92%E0%B8%99%E0%B9%8C-%E0%B8%82%E0%B8%B3%E0%B8%9B%E0%B8%A5%E0%B8%AD%E0%B8%94.jpg',
+    'ภาคกลาง',
+    '#card-grid'
+);
+
+doctorCard(
+    'นพ. สรวิศ กังธีระวัฒน์',
+    'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพพิษณุโลก',
+    '055051724',
+    'https://www.bangkokhospital.com/th/phitsanulok/doctor/sorawit-kangtherawat-m-d',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BPL-%E0%B8%99%E0%B8%9E-%E0%B8%AA%E0%B8%A3%E0%B8%A7%E0%B8%B4%E0%B8%A8-%E0%B8%81%E0%B8%B1%E0%B8%87%E0%B8%98%E0%B8%B5%E0%B8%A3%E0%B8%B0%E0%B8%A7%E0%B8%B1%E0%B8%92%E0%B8%99%E0%B9%8C.jpg',
+    'ภาคกลาง',
+    '#card-grid'
+);
+
+doctorCard(
+    'นพ. วรัตถ์ ประยูรวิวัฒน์',
+    'อายุรศาสตร์โรคหัวใจ',
+    'รพ.กรุงเทพพิษณุโลก',
+    '055051724',
+    'https://www.bangkokhospital.com/th/phitsanulok/doctor/warath-prayoonwiwat-m-d',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BPL-%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%97%E0%B8%AB%E0%B8%A1%E0%B8%AD%E0%B8%A7%E0%B8%A3%E0%B8%B1%E0%B8%95%E0%B8%96%E0%B9%8C-%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88-01.jpg',
+    'ภาคกลาง',
+    '#card-grid'
+);
+    
 doctorCard(
     'พญ. วชิราภา เจริญผล',
     'อายุรศาสตร์โรคหัวใจ',
     'รพ.กรุงเทพปากช่อง',
     '044088960',
     'https://www.bangkokhospital.com/th/pakchong/doctor/wachirapa-charoenpol-m-d',
-    'https://static.bangkokhospital.com/uploads/2025/07/IMG_1864-93-15.png',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BHP-%E0%B8%9E%E0%B8%8D.%E0%B8%A7%E0%B8%8A%E0%B8%B4%E0%B8%A3%E0%B8%B2%E0%B8%A0%E0%B8%B2-%E0%B9%80%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%8D%E0%B8%9C%E0%B8%A5.jpg',
     'ตะวันออกเฉียงเหนือ',
     '#card-grid'
 );
@@ -438,7 +548,7 @@ doctorCard(
     'รพ.กรุงเทพขอนแก่น',
     '043042888',
     'https://www.bangkokhospital.com/th/khonkaen/doctor/kraisorn-anutarapongpan-m-d',
-    'https://epms.bdms.co.th/media/images/photos/BKN/akrai.jpg',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BKN-%E0%B8%99%E0%B8%9E.%E0%B9%84%E0%B8%81%E0%B8%A3%E0%B8%AA%E0%B8%A3-%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%95%E0%B8%A3%E0%B8%9E%E0%B8%87%E0%B8%A9%E0%B9%8C%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%98%E0%B9%8C.jpg',
     'ตะวันออกเฉียงเหนือ',
     '#card-grid'
 );
@@ -449,7 +559,7 @@ doctorCard(
     'รพ.กรุงเทพราชสีมา',
     '044015999',
     'https://www.bangkokhospital.com/th/ratchasima/doctor/pinij-kaewsuwanna-m-d',
-    'https://epms.bdms.co.th/media/images/photos/BKH/%E0%B8%99%E0%B8%9E.%E0%B8%9E%E0%B8%B4%E0%B8%99%E0%B8%B4%E0%B8%88.jpg',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BKH-%E0%B8%99%E0%B8%9E.%E0%B8%9E%E0%B8%B4%E0%B8%99%E0%B8%B4%E0%B8%88-%E0%B9%81%E0%B8%81%E0%B9%89%E0%B8%A7%E0%B8%AA%E0%B8%B8%E0%B8%A7%E0%B8%A3%E0%B8%A3%E0%B8%93%E0%B8%B0.jpg',
     'ตะวันออกเฉียงเหนือ',
     '#card-grid'
 );
@@ -460,7 +570,7 @@ doctorCard(
     'รพ.กรุงเทพอุดร',
     '042188999',
     'https://www.bangkokhospital.com/th/udon/doctor/dr-kasem-tantipanichteerakul',
-    'https://epms.bdms.co.th/media/images/photos/BUD/170097_38972695.jpg',
+    'https://static.bangkokhospital.com/uploads/2025/09/BUD-kasem-tantipanichteerakul.jpg.jpg',
     'ตะวันออกเฉียงเหนือ',
     '#card-grid'
 );
@@ -471,7 +581,7 @@ doctorCard(
     'รพ.กรุงเทพสมุย',
     '077429500',
     'https://bangkokhospitalsamui.com/th/doctor/nat-chawanid/',
-    'https://bangkokhospitalsamui.com/wp-content/uploads/2022/11/1IMG_7025-687x1024.jpg.webp',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BSH-%E0%B8%99%E0%B8%9E.%E0%B8%93%E0%B8%B1%E0%B8%8E%E0%B8%90%E0%B9%8C-%E0%B8%8A%E0%B8%A7%E0%B8%93%E0%B8%B4%E0%B8%8A%E0%B8%A2%E0%B9%8C.jpg',
     'ภาคใต้',
     '#card-grid'
 );
@@ -482,7 +592,7 @@ doctorCard(
     'รพ.กรุงเทพสุราษฎร์',
     '077956789',
     'https://www.bangkokhospitalsurat.com/doctor/%E0%B8%9E%E0%B8%8D-%E0%B8%98%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99-%E0%B8%AA%E0%B8%B4%E0%B8%A3%E0%B8%B4%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%B1%E0%B8%92%E0%B8%99%E0%B9%8C%E0%B8%98%E0%B8%99/',
-    'https://www.bangkokhospitalsurat.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2024/02/IMG_8018-scaled-e1755484091825-742x1024.jpg.webp',
+    'https://bhq-cms.sgp1.digitaloceanspaces.com/uploads/2025/09/BSR_%E0%B8%9E%E0%B8%8D.%E0%B8%98%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99-%E0%B8%AA%E0%B8%B4%E0%B8%A3%E0%B8%B4%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%B1%E0%B8%92%E0%B8%99%E0%B9%8C%E0%B8%98%E0%B8%99.png.jpg',
     'ภาคใต้',
     '#card-grid'
 );
