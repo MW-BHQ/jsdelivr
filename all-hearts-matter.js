@@ -324,7 +324,7 @@ function safeInitAll() {
 
 // Delayed, idempotent boot to avoid colliding with React hydration
 (function () {
-  const DELAY_MS = 1000;     // ← start with 1s; you can tweak to 1500–2000 if needed
+  const DELAY_MS = 2000;     // ← start with 1s; you can tweak to 1500–2000 if needed
   let booted = false;
   let t;
 
@@ -339,7 +339,7 @@ function safeInitAll() {
     clearTimeout(t);
     t = setTimeout(() => {
       if ('requestIdleCallback' in window) {
-        requestIdleCallback(boot, { timeout: 2000 }); // yield to React, but don’t wait forever
+        requestIdleCallback(boot, { timeout: 3000 }); // yield to React, but don’t wait forever
       } else {
         boot();
       }
