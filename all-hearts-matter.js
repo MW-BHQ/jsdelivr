@@ -313,7 +313,7 @@ function doctorCard(
 // =========================
 //  Unified init
 // =========================
-// --- keep your function defs above (setupIntersectionObserver, initCardFilter, shuffleCard, initScrollCards) ---
+// keep your function defs above (setupIntersectionObserver, initCardFilter, shuffleCard, initScrollCards)
 
 function safeInitAll() {
   try { setupIntersectionObserver(); } catch(e){ console.error(e); }
@@ -322,41 +322,76 @@ function safeInitAll() {
   try { initScrollCards('three-words'); } catch(e){ console.error(e); }
 }
 
-// Delayed, idempotent boot to avoid colliding with React hydration
+/**
+ * Hydration-safe boot:
+ * - waits for window 'load'
+ * - then waits until the main thread is quiet (no long tasks) for QUIET_MS
+ * - then yields 2 RAFs (lets React paint) and runs once
+ */
 (function () {
-  const DELAY_MS = 2000;     // ← start with 1s; you can tweak to 1500–2000 if needed
+  const MIN_DELAY_MS = 800;   // baseline delay after load
+  const QUIET_MS     = 1500;  // time with no long tasks before we proceed
   let booted = false;
-  let t;
+  let lastLongTask = performance.now();
+  let po;
 
-  function boot() {
+  function markLongTask(list) {
+    // Any long task restarts the quiet timer
+    const entries = list.getEntries();
+    if (entries && entries.length) {
+      lastLongTask = entries[entries.length - 1].startTime + entries[entries.length - 1].duration;
+    }
+  }
+
+  function whenQuietThenBoot() {
     if (booted) return;
-    booted = true;
-    safeInitAll();
-    console.info('[AHM] booted after delay');
+
+    const now = performance.now();
+    const quietEnough = (now - lastLongTask) >= QUIET_MS;
+
+    if (!quietEnough) {
+      // check again soon
+      setTimeout(whenQuietThenBoot, 200);
+      return;
+    }
+
+    // extra safety: yield two frames so React can paint/commit.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (booted) return;
+        booted = true;
+        try { po && po.disconnect(); } catch(_) {}
+        safeInitAll();
+        console.info('[AHM] booted after hydration (quiet period reached)');
+      });
+    });
   }
 
   function schedule() {
-    clearTimeout(t);
-    t = setTimeout(() => {
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(boot, { timeout: 3000 }); // yield to React, but don’t wait forever
-      } else {
-        boot();
+    // Start observing long tasks (if supported)
+    try {
+      if ('PerformanceObserver' in window && PerformanceObserver.supportedEntryTypes?.includes('longtask')) {
+        po = new PerformanceObserver(markLongTask);
+        po.observe({ entryTypes: ['longtask'] });
       }
-    }, DELAY_MS);
+    } catch (_) {}
+
+    // Start after a minimal baseline delay
+    setTimeout(whenQuietThenBoot, MIN_DELAY_MS);
   }
 
-  // Prefer running after full load so React can hydrate first
-  if (document.readyState === 'complete') schedule();
-  else window.addEventListener('load', schedule, { once: true });
+  if (document.readyState === 'complete') {
+    schedule();
+  } else {
+    window.addEventListener('load', schedule, { once: true });
+  }
 
-  // Handle BFCache restores (iOS/Safari/in-app)
+  // BFCache restore / in-app webviews
   window.addEventListener('pageshow', (e) => {
-    if (e.persisted || (performance.getEntriesByType?.('navigation')[0]?.type === 'back_forward')) {
-      booted = false; // allow one more init
+    if (e.persisted) {
+      booted = false;
+      lastLongTask = performance.now();
       schedule();
     }
   });
 })();
-
-
