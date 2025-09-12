@@ -634,17 +634,75 @@ doctorCard(
 // =========================
 //  Unified init
 // =========================
-function safeInitAll() {
-  try { setupIntersectionObserver(); } catch(e){ console.error('counters failed:', e); }
-  try { initDoctorCards(); } catch(e){ console.error('doctor cards failed:', e); }
-  try { initCardFilter(); } catch(e){ console.error('filter failed:', e); }
-  try { shuffleCard(); } catch(e){ console.error('shuffle failed:', e); }
-  try { initScrollCards('three-words'); } catch(e){ console.error('scroll-scale failed:', e); }
-}
+(function () {
+  let booted = false;
+  const flags = { counters:false, cards:false, filters:false, scroll:false };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', safeInitAll);
-} else {
-  safeInitAll();
-}
+  function initCounters() {
+    if (flags.counters) return;
+    if (document.querySelector('.count')) {
+      setupIntersectionObserver();
+      flags.counters = true;
+    }
+  }
+  function initCards() {
+    if (flags.cards) return;
+    const grid = document.getElementById('card-grid');
+    if (grid) {
+      if (grid.children.length === 0) initDoctorCards();
+      flags.cards = grid.children.length > 0;
+    }
+  }
+  function initFilters() {
+    if (flags.filters) return;
+    if (document.getElementById('card-filters')) {
+      initCardFilter(); flags.filters = true;
+    }
+  }
+  function initScroll() {
+    if (flags.scroll) return;
+    if (document.getElementById('three-words')) {
+      initScrollCards('three-words'); flags.scroll = true;
+    }
+  }
+
+  function bootOnce() {
+    if (booted) return;
+    booted = true;
+    try { initCounters(); } catch(e){ console.error('counters failed:', e); }
+    try { initCards(); }    catch(e){ console.error('cards failed:', e); }
+    try { initFilters(); }  catch(e){ console.error('filters failed:', e); }
+    try { initScroll(); }   catch(e){ console.error('scroll failed:', e); }
+    console.info('[AHM] booted');
+  }
+
+  function tick() {
+    // rerun per-component in case DOM was swapped
+    try { initCounters(); } catch(e){}
+    try { initCards(); }    catch(e){}
+    try { initFilters(); }  catch(e){}
+    try { initScroll(); }   catch(e){}
+  }
+
+  // fire across realistic lifecycles
+  if (document.readyState !== 'loading') bootOnce();
+  document.addEventListener('DOMContentLoaded', bootOnce, {once:true});
+  window.addEventListener('load', bootOnce, {once:true});
+  window.addEventListener('pageshow', () => { // BFCache restore
+    flags.counters = false; flags.scroll = false; flags.filters = false;
+    // keep cards if grid still has nodes
+    const grid = document.getElementById('card-grid');
+    flags.cards = !!(grid && grid.children.length > 0);
+    tick();
+  });
+
+  // observe DOM swaps/hydration
+  const mo = new MutationObserver(tick);
+  mo.observe(document.body, { childList:true, subtree:true });
+
+  // last resort: periodic debounce for hostile environments
+  let t; const ping = () => { clearTimeout(t); t = setTimeout(tick, 200); };
+  document.addEventListener('visibilitychange', ping);
+})();
+
 
