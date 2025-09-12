@@ -329,8 +329,8 @@ function safeInitAll() {
  * - then yields 2 RAFs (lets React paint) and runs once
  */
 (function () {
-  const MIN_DELAY_MS = 1500;   // baseline delay after load
-  const QUIET_MS     = 2000;  // time with no long tasks before we proceed
+  const MIN_DELAY_MS = 800;   // baseline delay after load
+  const QUIET_MS     = 1500;  // time with no long tasks before we proceed
   let booted = false;
   let lastLongTask = performance.now();
   let po;
