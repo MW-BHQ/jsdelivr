@@ -32,12 +32,29 @@ function initTinyCarousel(wrapperSelector, trackSelector) {
   updateAvailability();
 }
 
-document.addEventListener("readystatechange", (event) => {
-  if (event.target.readyState === "interactive") {
-    //initLoader();
-  } else if (event.target.readyState === "complete") {
-
-    initTinyCarousel('#productCarousel', '#productImages');
-
+function addTargetToCampaignLink() {
+  const link = document.querySelector(
+    'a.tw-inline-flex.tw-items-center.tw-space-x-2[href="/th/campaign/all-hearts-matter"]'
+  );
+  if (link) {
+    link.setAttribute("target", "_blank");
+    link.setAttribute("rel", "noopener noreferrer"); // security best practice
   }
-});
+}
+
+//boot
+let _booted = false;
+function boot() {
+  if (_booted) return;
+  _booted = true;
+  initTinyCarousel("#productCarousel", "#productImages");
+  addTargetToCampaignLink();
+}
+
+// DOM ready
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  // queue to end of current tick so layout is settled
+  setTimeout(boot, 0);
+} else {
+  document.addEventListener("DOMContentLoaded", boot, { once: true });
+}
