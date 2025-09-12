@@ -313,13 +313,50 @@ function doctorCard(
 // =========================
 //  Unified init
 // =========================
+// --- keep your function defs above (setupIntersectionObserver, initCardFilter, shuffleCard, initScrollCards) ---
+
 function safeInitAll() {
   try { setupIntersectionObserver(); } catch(e){ console.error(e); }
-  try { initCardFilter(); } catch(e){ console.error(e); }
-  try { shuffleCard(); } catch(e){ console.error(e); }
+  try { initCardFilter(); }           catch(e){ console.error(e); }
+  try { shuffleCard(); }              catch(e){ console.error(e); }
   try { initScrollCards('three-words'); } catch(e){ console.error(e); }
 }
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', safeInitAll);
-else safeInitAll();
+
+// Delayed, idempotent boot to avoid colliding with React hydration
+(function () {
+  const DELAY_MS = 1000;     // ← start with 1s; you can tweak to 1500–2000 if needed
+  let booted = false;
+  let t;
+
+  function boot() {
+    if (booted) return;
+    booted = true;
+    safeInitAll();
+    console.info('[AHM] booted after delay');
+  }
+
+  function schedule() {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(boot, { timeout: 2000 }); // yield to React, but don’t wait forever
+      } else {
+        boot();
+      }
+    }, DELAY_MS);
+  }
+
+  // Prefer running after full load so React can hydrate first
+  if (document.readyState === 'complete') schedule();
+  else window.addEventListener('load', schedule, { once: true });
+
+  // Handle BFCache restores (iOS/Safari/in-app)
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted || (performance.getEntriesByType?.('navigation')[0]?.type === 'back_forward')) {
+      booted = false; // allow one more init
+      schedule();
+    }
+  });
+})();
 
 
