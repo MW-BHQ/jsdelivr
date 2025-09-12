@@ -634,16 +634,17 @@ doctorCard(
 // =========================
 //  Unified init
 // =========================
-function initAll() {
-    setupIntersectionObserver(); //stat counter
-    initDoctorCards();
-    initCardFilter();
-    shuffleCard();
-    initScrollCards('three-words'); // scaler
+function safeInitAll() {
+  try { setupIntersectionObserver(); } catch(e){ console.error('counters failed:', e); }
+  try { initDoctorCards(); } catch(e){ console.error('doctor cards failed:', e); }
+  try { initCardFilter(); } catch(e){ console.error('filter failed:', e); }
+  try { shuffleCard(); } catch(e){ console.error('shuffle failed:', e); }
+  try { initScrollCards('three-words'); } catch(e){ console.error('scroll-scale failed:', e); }
 }
 
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAll);
+  document.addEventListener('DOMContentLoaded', safeInitAll);
 } else {
-    initAll();
+  safeInitAll();
 }
+
