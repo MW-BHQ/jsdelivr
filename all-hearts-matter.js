@@ -2,19 +2,31 @@
 //  Animation Counter
 // =========================
 function animateCount(el, target, suffix = '') {
-  const duration = 1500; // ms
-  const startTime = performance.now();
-
-  function update(timestamp) {
-    const elapsed = timestamp - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const current = Math.floor(progress * target);
-    el.textContent = `${current.toLocaleString()}${suffix}`;
-    if (progress < 1) requestAnimationFrame(update);
-    else el.textContent = `${target.toLocaleString()}${suffix}`;
+  // create (or reuse) a child the script owns; do NOT touch el.textContent
+  let slot = el.querySelector('.js-count');
+  if (!slot) {
+    slot = document.createElement('span');
+    slot.className = 'js-count';
+    el.appendChild(slot);
   }
 
-  el.textContent = `0${suffix}`;
+  const duration = 1500;
+  const startTime = performance.now();
+
+  function update(ts) {
+    const elapsed = ts - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const current = Math.floor(progress * target);
+    slot.textContent = `${current.toLocaleString()}${suffix}`;
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      slot.textContent = `${target.toLocaleString()}${suffix}`;
+      el.setAttribute('data-counted', '1'); // optional marker
+    }
+  }
+
+  slot.textContent = `0${suffix}`;
   requestAnimationFrame(update);
 }
 
@@ -322,73 +334,56 @@ function safeInitAll() {
   try { initScrollCards('three-words'); } catch(e){ console.error(e); }
 }
 
-/**
- * Hydration-safe boot:
- * - waits for window 'load'
- * - then waits until the main thread is quiet (no long tasks) for QUIET_MS
- * - then yields 2 RAFs (lets React paint) and runs once
- */
+// Hydration-safe boot: wait for load, then a quiet period, then 2 RAFs
 (function () {
-  const MIN_DELAY_MS = 800;   // baseline delay after load
-  const QUIET_MS     = 1500;  // time with no long tasks before we proceed
+  const MIN_DELAY_MS = 800;
+  const QUIET_MS     = 1500;
   let booted = false;
   let lastLongTask = performance.now();
   let po;
 
   function markLongTask(list) {
-    // Any long task restarts the quiet timer
-    const entries = list.getEntries();
-    if (entries && entries.length) {
-      lastLongTask = entries[entries.length - 1].startTime + entries[entries.length - 1].duration;
+    const es = list.getEntries();
+    if (es && es.length) {
+      const e = es[es.length - 1];
+      lastLongTask = e.startTime + e.duration;
     }
   }
 
   function whenQuietThenBoot() {
     if (booted) return;
-
     const now = performance.now();
-    const quietEnough = (now - lastLongTask) >= QUIET_MS;
-
-    if (!quietEnough) {
-      // check again soon
+    if (now - lastLongTask < QUIET_MS) {
       setTimeout(whenQuietThenBoot, 200);
       return;
     }
-
-    // extra safety: yield two frames so React can paint/commit.
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (booted) return;
         booted = true;
         try { po && po.disconnect(); } catch(_) {}
         safeInitAll();
-        console.info('[AHM] booted after hydration (quiet period reached)');
+        console.info('[AHM] booted after hydration');
       });
     });
   }
 
   function schedule() {
-    // Start observing long tasks (if supported)
     try {
-      if ('PerformanceObserver' in window && PerformanceObserver.supportedEntryTypes?.includes('longtask')) {
+      if ('PerformanceObserver' in window &&
+          PerformanceObserver.supportedEntryTypes?.includes('longtask')) {
         po = new PerformanceObserver(markLongTask);
         po.observe({ entryTypes: ['longtask'] });
       }
-    } catch (_) {}
-
-    // Start after a minimal baseline delay
+    } catch(_) {}
     setTimeout(whenQuietThenBoot, MIN_DELAY_MS);
   }
 
-  if (document.readyState === 'complete') {
-    schedule();
-  } else {
-    window.addEventListener('load', schedule, { once: true });
-  }
+  if (document.readyState === 'complete') schedule();
+  else window.addEventListener('load', schedule, { once: true });
 
-  // BFCache restore / in-app webviews
   window.addEventListener('pageshow', (e) => {
-    if (e.persisted) {
+    if (e.persisted) { // bfcache restore
       booted = false;
       lastLongTask = performance.now();
       schedule();
