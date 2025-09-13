@@ -418,13 +418,8 @@ function seeMore() {
     });
 
     // --- Stick filter bar only while #card-grid is visible ---
-    const section = document.getElementById('doctor-section');
     const topSentinel = document.getElementById('top-sentinel');
     const bottomSentinel = document.getElementById('bottom-sentinel');
-    filterBar.style.position = 'fixed';
-    filterBar.style.top = '0';
-    filterBar.style.left = '0';
-    filterBar.style.zIndex = '50';
     
     new IntersectionObserver(([entry]) => {
       const isStuck = !entry.isIntersecting;
