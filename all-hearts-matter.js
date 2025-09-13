@@ -335,7 +335,8 @@ function seeMore() {
       seeMoreBtn.type = 'button';
       seeMoreBtn.textContent = 'See more';
       // Works with or without DaisyUI present:
-      seeMoreBtn.className = 'btn btn-primary px-5 py-2 rounded-full';
+      seeMoreBtn.className = 'btn py-1 px-4 rounded-full border-2 border-[#e7edfe] text-sm';
+      seeMoreBtn.style.fontFamily = "var(--font-satoshi), var(--font-aktiv)";
       wrap.appendChild(seeMoreBtn);
       grid.insertAdjacentElement('afterend', wrap);
     }
@@ -413,6 +414,29 @@ function seeMore() {
       // Always reset to first 6 on filter change
       applyFilter(key);
     });
+
+    // --- Stick filter bar only while #card-grid is visible ---
+    filterBar.style.position = 'sticky';
+    filterBar.style.top = '0';
+    filterBar.style.zIndex = '50';
+    filterBar.style.background = 'white';
+    
+    const gridObserver = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          // Grid is on-screen → keep the filter bar sticky
+          filterBar.style.position = 'sticky';
+        } else {
+          // Grid is off-screen (scrolled past or above) → release
+          filterBar.style.position = 'static';
+        }
+      },
+      { root: null, threshold: 0 }
+    );
+    
+    gridObserver.observe(grid);
+
   }
 
 // =========================
