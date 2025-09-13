@@ -419,7 +419,7 @@ function seeMore() {
 
     // --- Stick filter bar only while #card-grid is visible ---
     const section = document.getElementById('doctor-section');
-    filterBar.style.position = 'sticky';
+    filterBar.style.position = 'fixed';
     filterBar.style.top = '0';
     filterBar.style.left = '0';
     filterBar.style.zIndex = '50';
@@ -429,7 +429,7 @@ function seeMore() {
         const entry = entries[0];
         if (entry.isIntersecting) {
           // Grid is on-screen → keep the filter bar sticky
-          filterBar.style.position = 'sticky';
+          filterBar.style.position = 'fixed';
         } else {
           // Grid is off-screen (scrolled past or above) → release
           filterBar.style.position = 'static';
