@@ -416,21 +416,35 @@ function seeMore() {
     });
 
     // --- Stick filter bar only while #card-grid is visible ---
-    function updateSticky() {
+    filterBar.style.position = 'sticky';
+    filterBar.style.top = '0';
+    filterBar.style.left = '0';
+    filterBar.style.zIndex = '50';
+    
+    const gridObserver = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        const top = grid.getBoundingClientRect().top;
+    
+        if (entry.isIntersecting && top <= 0) {
+          // Grid visible and we've scrolled into it → stick
+          filterBar.style.position = 'sticky';
+        } else {
+          // Either grid below top again (scrolling up) or fully out of view → release
+          filterBar.style.position = 'static';
+        }
+      },
+      { root: null, threshold: 0 }
+    );
+    
+    gridObserver.observe(grid);
+
+    window.addEventListener('scroll', () => {
       const r = grid.getBoundingClientRect();
-      const within = r.top <= 0 && r.bottom > 0; // inside the section
-      if (within) {
-        filterBar.style.position = 'sticky';
-        filterBar.style.top = '0px';
-        filterBar.style.left = '0px';
-        filterBar.style.zIndex = '50';
-      } else {
+      if (r.top > 0 || r.bottom <= 0) {
         filterBar.style.position = 'static';
       }
-    }
-    document.addEventListener('scroll', updateSticky, { passive: true });
-    window.addEventListener('resize', updateSticky);
-    updateSticky();
+    }, { passive: true });
 
 // =========================
 //  Unified init
