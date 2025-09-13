@@ -416,28 +416,21 @@ function seeMore() {
     });
 
     // --- Stick filter bar only while #card-grid is visible ---
-    filterBar.style.position = 'sticky';
-    filterBar.style.top = '0';
-    filterBar.style.zIndex = '50';
-    filterBar.style.background = 'white';
-    
-    const gridObserver = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          // Grid is on-screen → keep the filter bar sticky
-          filterBar.style.position = 'sticky';
-        } else {
-          // Grid is off-screen (scrolled past or above) → release
-          filterBar.style.position = 'static';
-        }
-      },
-      { root: null, threshold: 0 }
-    );
-    
-    gridObserver.observe(grid);
-
-  }
+    function updateSticky() {
+      const r = grid.getBoundingClientRect();
+      const within = r.top <= 0 && r.bottom > 0; // inside the section
+      if (within) {
+        filterBar.style.position = 'sticky';
+        filterBar.style.top = '0px';
+        filterBar.style.left = '0px';
+        filterBar.style.zIndex = '50';
+      } else {
+        filterBar.style.position = 'static';
+      }
+    }
+    document.addEventListener('scroll', updateSticky, { passive: true });
+    window.addEventListener('resize', updateSticky);
+    updateSticky();
 
 // =========================
 //  Unified init
