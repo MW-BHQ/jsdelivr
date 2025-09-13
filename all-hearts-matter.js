@@ -308,18 +308,124 @@ function doctorCard(
     updateCards(); // initial
   }
 
+// =========================
+//  See more
+// =========================
 
+function seeMore() {
+    const batchSize = 6;
+    const grid = document.getElementById('card-grid');
+    const filterBar = document.getElementById('card-filters');
+
+    if (!grid || !filterBar) {
+      console.error('Missing #card-grid or #card-filters');
+      return;
+    }
+
+    // All cards are direct children with data-tags
+    const allCards = Array.from(grid.querySelectorAll('[data-tags]'));
+
+    // Ensure "See more" button exists (create if not found)
+    let seeMoreBtn = document.getElementById('see-more-btn');
+    if (!seeMoreBtn) {
+      const wrap = document.createElement('div');
+      wrap.className = 'mt-6 flex justify-center';
+      seeMoreBtn = document.createElement('button');
+      seeMoreBtn.id = 'see-more-btn';
+      seeMoreBtn.type = 'button';
+      seeMoreBtn.textContent = 'See more';
+      // Works with or without DaisyUI present:
+      seeMoreBtn.className = 'btn btn-primary px-5 py-2 rounded-full';
+      wrap.appendChild(seeMoreBtn);
+      grid.insertAdjacentElement('afterend', wrap);
+    }
+
+    let filtered = allCards.slice();
+    let shown = 0;
+
+    function hideAll() {
+      allCards.forEach(c => c.classList.add('hidden'));
+    }
+
+    function updateControls() {
+      const more = shown < filtered.length;
+      seeMoreBtn.classList.toggle('hidden', !more);
+      seeMoreBtn.setAttribute('aria-hidden', String(!more));
+    }
+
+    function revealNextBatch() {
+      const next = filtered.slice(shown, shown + batchSize);
+      next.forEach(card => card.classList.remove('hidden'));
+      shown += next.length;
+      updateControls();
+    }
+
+    function getTags(el) {
+      return (el.getAttribute('data-tags') || '')
+        .split(/\s+/)
+        .map(s => s.trim())
+        .filter(Boolean);
+    }
+
+    function match(card, key) {
+      if (key === 'all') return true;
+      return getTags(card).includes(key);
+    }
+
+    function applyFilter(key) {
+      filtered = allCards.filter(c => match(c, key));
+      shown = 0;
+      hideAll();
+      revealNextBatch(); // shows ≤6; hides See more when not needed
+    }
+
+    // Initialize using the chip that has aria-pressed="true" (fallback to 'all')
+    const initialBtn =
+      filterBar.querySelector('[data-filter][aria-pressed="true"]') ||
+      filterBar.querySelector('[data-filter]');
+    const initialKey = initialBtn ? initialBtn.getAttribute('data-filter') : 'all';
+    applyFilter(initialKey);
+
+    // See more
+    seeMoreBtn.addEventListener('click', () => {
+      seeMoreBtn.classList.add('btn-disabled', 'loading');
+      setTimeout(() => {
+        revealNextBatch();
+        seeMoreBtn.classList.remove('btn-disabled', 'loading');
+      }, 100);
+    });
+
+    // Filters (event delegation)
+    filterBar.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-filter]');
+      if (!btn) return;
+
+      const key = btn.getAttribute('data-filter');
+
+      // Visual active state to match your chips
+      filterBar.querySelectorAll('button[data-filter]').forEach(b => {
+        b.setAttribute('aria-pressed', 'false');
+        b.classList.remove('bg-[#e7edfe]');
+      });
+      btn.setAttribute('aria-pressed', 'true');
+      btn.classList.add('bg-[#e7edfe]');
+
+      // Always reset to first 6 on filter change
+      applyFilter(key);
+    });
+  }
 
 // =========================
 //  Unified init
 // =========================
-// keep your function defs above (setupIntersectionObserver, initCardFilter, shuffleCard, initScrollCards)
 
 function safeInitAll() {
   try { setupIntersectionObserver(); } catch(e){ console.error(e); }
   try { initCardFilter(); }           catch(e){ console.error(e); }
+  try { seeMore(); }           catch(e){ console.error(e); }
   try { shuffleCard(); }              catch(e){ console.error(e); }
   try { initScrollCards('three-words'); } catch(e){ console.error(e); }
+  
 }
 
 /**
