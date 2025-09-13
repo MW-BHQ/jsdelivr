@@ -439,13 +439,6 @@ function seeMore() {
     
     gridObserver.observe(grid);
 
-    window.addEventListener('scroll', () => {
-      const r = grid.getBoundingClientRect();
-      if (r.top > 0 || r.bottom <= 0) {
-        filterBar.style.position = 'static';
-      }
-    }, { passive: true });
-
 // =========================
 //  Unified init
 // =========================
