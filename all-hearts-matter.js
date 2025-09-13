@@ -418,17 +418,19 @@ function seeMore() {
     // --- Stick filter bar only while #card-grid is visible ---
     filterBar.style.position = 'sticky';
     filterBar.style.top = '0';
+    filterBar.style.left = '0';
     filterBar.style.zIndex = '50';
-    filterBar.style.background = 'white';
     
     const gridObserver = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        if (entry.isIntersecting) {
-          // Grid is on-screen → keep the filter bar sticky
+        const r = grid.getBoundingClientRect();
+    
+        if (entry.isIntersecting && r.top <= 0) {
+          // inside the section → stick
           filterBar.style.position = 'sticky';
         } else {
-          // Grid is off-screen (scrolled past or above) → release
+          // scrolled above or past section → release
           filterBar.style.position = 'static';
         }
       },
