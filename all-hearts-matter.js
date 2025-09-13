@@ -327,13 +327,15 @@ function seeMore() {
 
     // Ensure "See more" button exists (create if not found)
     let seeMoreBtn = document.getElementById('see-more-btn');
+    const lang = window.location.pathname.split('/').filter(Boolean)[0] || null;
+    const text = lang === "th" ? "ดูเพิ่ม" : "See More";
     if (!seeMoreBtn) {
       const wrap = document.createElement('div');
       wrap.className = 'mt-6 flex justify-center';
       seeMoreBtn = document.createElement('button');
       seeMoreBtn.id = 'see-more-btn';
       seeMoreBtn.type = 'button';
-      seeMoreBtn.textContent = 'See more';
+      seeMoreBtn.textContent = text;
       // Works with or without DaisyUI present:
       seeMoreBtn.className = 'btn py-1 px-4 rounded-full border-2 border-[#e7edfe] text-sm';
       seeMoreBtn.style.fontFamily = "var(--font-satoshi), var(--font-aktiv)";
@@ -421,23 +423,38 @@ function seeMore() {
     filterBar.style.left = '0';
     filterBar.style.zIndex = '50';
     
-    const gridObserver = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        const r = grid.getBoundingClientRect();
+    const topSentinel = document.createElement('div');
+    const bottomSentinel = document.createElement('div');
+    topSentinel.style.cssText = 'position:relative;height:1px;';
+    bottomSentinel.style.cssText = 'position:relative;height:1px;';
+    grid.parentNode.insertBefore(topSentinel, grid);            // before #card-grid
+    grid.insertAdjacentElement('afterend', bottomSentinel);     // after #card-grid
     
-        if (entry.isIntersecting && r.top <= 0) {
-          // inside the section → stick
-          filterBar.style.position = 'sticky';
-        } else {
-          // scrolled above or past section → release
-          filterBar.style.position = 'static';
-        }
+    let passedTop = false;
+    let hitBottom = false;
+    
+    // When top sentinel scrolls past the top edge → stick; when it comes back → release
+    const topObs = new IntersectionObserver(
+      ([e]) => {
+        // rootMargin pushes the bottom of the viewport up so we detect "passed top" earlier
+        passedTop = !e.isIntersecting;
+        filterBar.style.position = (passedTop && !hitBottom) ? 'sticky' : 'static';
       },
-      { root: null, threshold: 0 }
+      { root: null, threshold: 0, rootMargin: '0px 0px -1px 0px' }
     );
     
-    gridObserver.observe(grid);
+    // When bottom sentinel enters the viewport (we’re at/after the end) → release
+    const bottomObs = new IntersectionObserver(
+      ([e]) => {
+        // rootMargin pulls the top of the viewport down so we detect bottom sooner
+        hitBottom = e.isIntersecting;
+        filterBar.style.position = (passedTop && !hitBottom) ? 'sticky' : 'static';
+      },
+      { root: null, threshold: 0, rootMargin: '-1px 0px 0px 0px' }
+    );
+    
+    topObs.observe(topSentinel);
+    bottomObs.observe(bottomSentinel);
 
   }
 
