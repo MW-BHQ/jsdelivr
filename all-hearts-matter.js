@@ -418,43 +418,22 @@ function seeMore() {
     });
 
     // --- Stick filter bar only while #card-grid is visible ---
+    const section = document.getElementById('doctor-section');
     filterBar.style.position = 'sticky';
     filterBar.style.top = '0';
     filterBar.style.left = '0';
     filterBar.style.zIndex = '50';
     
-    const topSentinel = document.createElement('div');
-    const bottomSentinel = document.createElement('div');
-    topSentinel.style.cssText = 'position:relative;height:1px;';
-    bottomSentinel.style.cssText = 'position:relative;height:1px;';
-    grid.parentNode.insertBefore(topSentinel, grid);            // before #card-grid
-    grid.insertAdjacentElement('afterend', bottomSentinel);     // after #card-grid
-    
-    let passedTop = false;
-    let hitBottom = false;
-    
-    // When top sentinel scrolls past the top edge → stick; when it comes back → release
-    const topObs = new IntersectionObserver(
-      ([e]) => {
-        // rootMargin pushes the bottom of the viewport up so we detect "passed top" earlier
-        passedTop = !e.isIntersecting;
-        filterBar.style.position = (passedTop && !hitBottom) ? 'sticky' : 'static';
-      },
-      { root: null, threshold: 0, rootMargin: '0px 0px -1px 0px' }
-    );
-    
-    // When bottom sentinel enters the viewport (we’re at/after the end) → release
-    const bottomObs = new IntersectionObserver(
-      ([e]) => {
-        // rootMargin pulls the top of the viewport down so we detect bottom sooner
-        hitBottom = e.isIntersecting;
-        filterBar.style.position = (passedTop && !hitBottom) ? 'sticky' : 'static';
-      },
-      { root: null, threshold: 0, rootMargin: '-1px 0px 0px 0px' }
-    );
-    
-    topObs.observe(topSentinel);
-    bottomObs.observe(bottomSentinel);
+    const gridObserver = new IntersectionObserver(([entry]) => {
+    const r = section.getBoundingClientRect();
+    if (entry.isIntersecting && r.top <= 0 && r.bottom > 0) {
+      filterBar.style.position = 'sticky';
+    } else {
+      filterBar.style.position = 'static';
+    }
+  }, { root: null, threshold: 0 });
+  
+  gridObserver.observe(section);
 
   }
 
