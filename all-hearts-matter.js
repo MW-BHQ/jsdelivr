@@ -419,21 +419,26 @@ function seeMore() {
 
     // --- Stick filter bar only while #card-grid is visible ---
     const section = document.getElementById('doctor-section');
-    filterBar.style.position = 'sticky';
+    filterBar.style.position = 'fixed';
     filterBar.style.top = '0';
     filterBar.style.left = '0';
     filterBar.style.zIndex = '50';
     
-    const gridObserver = new IntersectionObserver(([entry]) => {
-    const r = section.getBoundingClientRect();
-    if (entry.isIntersecting && r.top <= 0 && r.bottom > 0) {
-      filterBar.style.position = 'sticky';
-    } else {
-      filterBar.style.position = 'static';
-    }
-  }, { root: null, threshold: 0 });
-  
-  gridObserver.observe(section);
+    const gridObserver = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          // Grid is on-screen → keep the filter bar sticky
+          filterBar.style.position = 'fixed';
+        } else {
+          // Grid is off-screen (scrolled past or above) → release
+          filterBar.style.position = 'static';
+        }
+      },
+      { root: null, threshold: 0 }
+    );
+    
+    gridObserver.observe(grid);
 
   }
 
