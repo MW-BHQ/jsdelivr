@@ -438,7 +438,7 @@ function seeMore() {
       { root: null, threshold: 0 }
     );
     
-    gridObserver.observe(document.getElementById('doctor-section'));
+    gridObserver.observe(grid);
 
 
   }
