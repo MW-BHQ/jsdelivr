@@ -424,22 +424,14 @@ function seeMore() {
     filterBar.style.left = '0';
     filterBar.style.zIndex = '50';
     
-    const gridObserver = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          // Grid is on-screen → keep the filter bar sticky
-          filterBar.style.position = 'sticky';
-        } else {
-          // Grid is off-screen (scrolled past or above) → release
-          filterBar.style.position = 'static';
-        }
-      },
-      { root: null, threshold: 0 }
-    );
+    const io = new IntersectionObserver(() => {
+      const r = section.getBoundingClientRect();
+      const barH = filterBar.offsetHeight || 0;
+      const shouldStick = r.top <= 0 && r.bottom > barH;
+      filterBar.style.position = shouldStick ? 'sticky' : 'static';
+    }, { root: null, threshold: 0 });
     
-    gridObserver.observe(grid);
-
+    io.observe(section);
 
   }
 
