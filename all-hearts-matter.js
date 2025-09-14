@@ -430,8 +430,10 @@ function seeMore() {
         // reserve space BEFORE fixing to prevent jitter
         spacer.style.height = `${filterBar.offsetHeight || 0}px`;
         filterBar.classList.add('fixed');
+        filterBar.classList.remove('-mx-4');
       } else {
         filterBar.classList.remove('fixed');
+        filterBar.classList.add('-mx-4');
         spacer.style.height = '0px';
       }
     }, { threshold: [0, 1] }).observe(topSentinel);
