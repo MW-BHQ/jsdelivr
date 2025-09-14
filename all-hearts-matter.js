@@ -418,23 +418,35 @@ function seeMore() {
     });
 
     // --- Stick filter bar only while #card-grid is visible ---
+    const spacer = document.getElementById('filter-spacer');
     const topSentinel = document.getElementById('top-sentinel');
     const bottomSentinel = document.getElementById('bottom-sentinel');
     
     new IntersectionObserver(([entry]) => {
-      const crossedTop = entry.boundingClientRect.top <= 0;
-      const isStuck = !entry.isIntersecting && crossedTop;
-      filterBar.classList.toggle('fixed', isStuck);
+    const crossedTop = entry.boundingClientRect.top <= 0;
+    const isStuck = !entry.isIntersecting && crossedTop;
+  
+      if (isStuck) {
+        // reserve space BEFORE fixing to prevent jitter
+        spacer.style.height = `${filterBar.offsetHeight || 0}px`;
+        filterBar.classList.add('fixed');
+      } else {
+        filterBar.classList.remove('fixed');
+        spacer.style.height = '0px';
+      }
     }, { threshold: [0, 1] }).observe(topSentinel);
     
+    // keep your 1px safeguard
     if (bottomSentinel.offsetHeight === 0) bottomSentinel.style.height = '1px';
+    
+    // release when bottom sentinel enters top half of viewport
     new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
-        // We’re in the top half of the viewport now → release
         filterBar.classList.remove('fixed');
+        spacer.style.height = '0px';
       }
     }, {
-      rootMargin: '0px 0px -50% 0px', // shrink bottom of the root by 50%
+      rootMargin: '0px 0px -50% 0px',
       threshold: 0
     }).observe(bottomSentinel);
 
