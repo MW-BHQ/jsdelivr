@@ -141,17 +141,26 @@ function playVideo(btn, id, parent_block) {
     filterBar.addEventListener('click', function (e) {
       var btn = e.target.closest && e.target.closest('button[data-filter]');
       if (!btn) return;
+    
       var filter = btn.dataset.filter;
       setActive(btn);
+    
+      // unhide before applying (keeps your fade/translate)
       for (var i = 0; i < cards.length; i++) cards[i].classList.remove('hidden');
       applyFilter(filter);
     
-      // scroll to the first visible card
-      var firstVisible = cards.find(c => !c.classList.contains('hidden'));
+      // scroll to first visible card with fixed-bar offset
+      var firstVisible = null;
+      for (var i = 0; i < cards.length; i++) {
+        if (!cards[i].classList.contains('hidden')) { firstVisible = cards[i]; break; }
+      }
       if (firstVisible) {
-        firstVisible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        var offset = filterBar.classList.contains('fixed') ? (filterBar.offsetHeight || 0) : 0;
+        var y = firstVisible.getBoundingClientRect().top + window.pageYOffset - offset - 8; // small padding
+        window.scrollTo({ top: y, behavior: 'smooth' });
       }
     });
+
 
 
     // initial
