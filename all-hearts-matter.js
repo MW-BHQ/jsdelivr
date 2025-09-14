@@ -428,11 +428,9 @@ function seeMore() {
     }, { threshold: [0, 1] }).observe(topSentinel);
     
     new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return; // ensure it's inside the viewport
-    
-      const barH = filterBar.offsetHeight || 1; // current bar height
-      // release only when the sentinel's TOP has reached the bar's bottom
-      if (entry.boundingClientRect.top <= barH) {
+      if (!entry.isIntersecting) return; // only while sentinel is visible
+      // release when sentinel's top has moved above half the viewport height
+      if (entry.boundingClientRect.top <= window.innerHeight / 2) {
         filterBar.classList.remove('fixed');
       }
     }, {
