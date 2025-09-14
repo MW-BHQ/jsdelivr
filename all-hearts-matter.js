@@ -427,14 +427,14 @@ function seeMore() {
       filterBar.classList.toggle('fixed', isStuck);
     }, { threshold: [0, 1] }).observe(topSentinel);
     
+    if (bottomSentinel.offsetHeight === 0) bottomSentinel.style.height = '1px';
     new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return; // only while sentinel is visible
-      // release when sentinel's top has moved above half the viewport height
-      if (entry.boundingClientRect.top <= window.innerHeight / 2) {
+      if (entry.isIntersecting) {
+        // We’re in the top half of the viewport now → release
         filterBar.classList.remove('fixed');
       }
     }, {
-      rootMargin: '0px',
+      rootMargin: '0px 0px -50% 0px', // shrink bottom of the root by 50%
       threshold: 0
     }).observe(bottomSentinel);
 
