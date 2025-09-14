@@ -145,7 +145,14 @@ function playVideo(btn, id, parent_block) {
       setActive(btn);
       for (var i = 0; i < cards.length; i++) cards[i].classList.remove('hidden');
       applyFilter(filter);
+    
+      // scroll to the first visible card
+      var firstVisible = cards.find(c => !c.classList.contains('hidden'));
+      if (firstVisible) {
+        firstVisible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
+
 
     // initial
     applyFilter('all');
