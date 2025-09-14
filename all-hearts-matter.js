@@ -422,9 +422,10 @@ function seeMore() {
     const bottomSentinel = document.getElementById('bottom-sentinel');
     
     new IntersectionObserver(([entry]) => {
-      const isStuck = !entry.isIntersecting;
+      const crossedTop = entry.boundingClientRect.top <= 0;
+      const isStuck = !entry.isIntersecting && crossedTop;
       filterBar.classList.toggle('fixed', isStuck);
-    },{ root: null, threshold: 0 }).observe(topSentinel);
+    }, { threshold: [0, 1] }).observe(topSentinel);
     
     new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
