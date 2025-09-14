@@ -424,7 +424,7 @@ function seeMore() {
     new IntersectionObserver(([entry]) => {
       const isStuck = !entry.isIntersecting;
       filterBar.classList.toggle('fixed', isStuck);
-    }, { threshold: 0 }).observe(topSentinel);
+    },{ root: null, threshold: 0 }).observe(topSentinel);
     
     new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
