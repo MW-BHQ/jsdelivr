@@ -424,15 +424,15 @@ function seeMore() {
     new IntersectionObserver(([entry]) => {
       const isStuck = !entry.isIntersecting;
       filterBar.classList.toggle('fixed', isStuck);
-    }, { root: null, threshold: 0 }).observe(topSentinel);
-  
+    }, { threshold: 0 }).observe(topSentinel);
+    
     new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         filterBar.classList.remove('fixed');
       }
     }, {
-      root: null,
-      rootMargin: () => `0px 0px -${filterBar.offsetHeight || 1}px 0px`
+      rootMargin: `-${filterBar.offsetHeight || 1}px 0px 0px 0px`,
+      threshold: 0
     }).observe(bottomSentinel);
 
   }
