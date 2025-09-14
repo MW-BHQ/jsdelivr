@@ -428,11 +428,13 @@ function seeMore() {
     }, { threshold: [0, 1] }).observe(topSentinel);
     
     new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
+      // Release only when the bottom sentinel’s top is at/above the bar’s bottom edge
+      if (entry.isIntersecting && entry.boundingClientRect.top <= (filterBar.offsetHeight || 1)) {
         filterBar.classList.remove('fixed');
       }
     }, {
-      rootMargin: `-${filterBar.offsetHeight || 1}px 0px 0px 0px`,
+      // No negative top offset; we do an explicit position check instead
+      rootMargin: '0px',
       threshold: 0
     }).observe(bottomSentinel);
 
