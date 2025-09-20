@@ -118,13 +118,13 @@ function initTinyCarousel(wrapperSelector, trackSelector) {
 }
 
 function addTargetToCampaignLink() {
-  const link = document.querySelector(
-    'a.tw-inline-flex.tw-items-center.tw-space-x-2[href="/th/campaign/all-hearts-matter"]'
+  const links = document.querySelectorAll(
+    'a.tw-inline-flex.tw-items-center.tw-space-x-2[href="/th/campaign/all-hearts-matter"], a.tw-inline-flex.tw-items-center.tw-space-x-2[href="/en/campaign/all-hearts-matter"]'
   );
-  if (link) {
+  links.forEach(link => {
     link.setAttribute("target", "_blank");
-    link.setAttribute("rel", "noopener noreferrer"); // security best practice
-  }
+    link.setAttribute("rel", "noopener noreferrer");
+  });
 }
 
 //boot
